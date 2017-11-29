@@ -17,6 +17,7 @@ party <- read.csv("./data/2016 Electoral Votes.csv",stringsAsFactors = FALSE)
 party[18,"State"] <- "Louisiana"
 
 
+
 #change energy info to have each state as rows and amount of each type of energy as columns and remove DC
 energy <- import("./data/Net_generation_for_all_sectors.csv",stringsAsFactors = FALSE) 
 selected.energy <- energy %>% select(description, 'source key', as.character(2016)) %>% 
