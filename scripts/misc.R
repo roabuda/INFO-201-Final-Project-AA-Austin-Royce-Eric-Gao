@@ -38,6 +38,6 @@ left_join(final.energy, by = "State")
 joined[is.na(joined)] <- "--"
 joined <- joined[!joined$State == "District of Columbia", ]
 joined <- joined[-(20),]
-
+joined[joined == "--" | joined == "NM"] <- 0
 #export as csv
 export(joined,"./data/joined.csv", format = "csv")
