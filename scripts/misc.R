@@ -14,7 +14,7 @@ party <- read.csv("./data/2016 Electoral Votes.csv",stringsAsFactors = FALSE)
 
 
 #change energy info to have each state as rows and amount of each type of energy as columns
-energy <- import("./data/Net_generation_for_all_sectors.csv",stringsAsFactors = FALSE) 
+energy <- read.table("./data/Net_generation_for_all_sectors.csv",stringsAsFactors = FALSE, header = TRUE) 
 energy.2 <- energy %>% select(description, 'source key', as.character(2016)) %>% 
   mutate('source key' = substr(energy$`source key`, 10, 12)) %>% 
   mutate(State = gsub( " :.*$", "", energy$description)) %>% 
