@@ -15,6 +15,7 @@ party <- read.csv("./data/2016 Electoral Votes.csv")
 energy <- import("./data/Net_generation_for_all_sectors.csv") %>% 
   select(description, 'source key', as.character(2016))%>% 
   mutate('source key' = substr(energy$`source key`, 10, 12)) 
+  
 
 #join data
 joined <- party %>% left_join(population)

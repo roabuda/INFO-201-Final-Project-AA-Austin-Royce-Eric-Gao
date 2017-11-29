@@ -17,13 +17,13 @@ ScatterGraph <- function(data.frame,
                       x.min = 0,
                       y.min = 0)
 {
- plot <-  ggplot(data = data.frame) +
-   geom_point(mapping = aes(x = data.frame[,x.var],
-                            y=data.frame[,y.var],
-                            color = data.frame[,colorVar])) +
-   labs(title = title, x = x.lab, y = y.lab, color = legend) + 
-   xlim(x.min, x.max)+
-   ylim(y.min, y.max)
+  plot <-  ggplot(data = data.frame, aes(x = data.frame[,x.var],
+                                         y=data.frame[,y.var])) +
+    geom_point(aes(color = data.frame[,colorVar])) +
+    geom_smooth()+
+    labs(title = title, x = x.lab, y = y.lab, color = legend) + 
+    xlim(x.min, x.max)+
+    ylim(y.min, y.max)   
   return(plot)
 }
 
