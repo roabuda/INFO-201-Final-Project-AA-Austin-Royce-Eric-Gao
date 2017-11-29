@@ -3,32 +3,42 @@ library(rio)
 library(dplyr)
 library(tidyr)
 
-#format population csv to only include state and population
+#format population csv to only include state and population and remove DC
 population <- read.csv("./data/Sheet1-Table 1.csv",stringsAsFactors = FALSE)
 population <- population[,c(1:3)]
 colnames(population) <- c("State","Votes","Population")
 population <- population %>% select(State,Population)
+population <- population[3:53,] %>% na.omit()
 
-#get party info
+
+#get party info and remove DC
 party <- read.csv("./data/2016 Electoral Votes.csv",stringsAsFactors = FALSE)
+#rename louisiana because it was mispelled
+party[18,"State"] <- "Louisiana"
 
 
-#change energy info to have each state as rows and amount of each type of energy as columns
-energy <- read.table("./data/Net_generation_for_all_sectors.csv",stringsAsFactors = FALSE, header = TRUE) 
-energy.2 <- energy %>% select(description, 'source key', as.character(2016)) %>% 
+
+#change energy info to have each state as rows and amount of each type of energy as columns and remove DC
+energy <- import("./data/Net_generation_for_all_sectors.csv",stringsAsFactors = FALSE) 
+selected.energy <- energy %>% select(description, 'source key', as.character(2016)) %>% 
   mutate('source key' = substr(energy$`source key`, 10, 12)) %>% 
   mutate(State = gsub( " :.*$", "", energy$description)) %>% 
-  select(State, 'source key', as.character(2016))
+  select(State, 'source key', as.character(2016)) 
 
-unwanted.state<- energy.2[!energy.2$State %in% state.name,]
-energy.2 <- energy.2[!energy.2$State == unwanted.state, ]
-colnames(energy.2) <- c("State","Type","Thousand Megawatthours")
+unwanted.state<- selected.energy[!selected.energy$State %in% state.name,]
+selected.energy <- selected.energy[!selected.energy$State == unwanted.state, ]
+colnames(selected.energy) <- c("State","Type","Thousand Megawatthours")
 unwanted.types <- c(".A","ALL","AOR")
-energy.2 <- energy.2[!energy.2$Type %in% unwanted.types, ]
-datafr <- spread(energy.2, key = Type, value ='Thousand Megawatthours')
+selected.energy <- selected.energy[!selected.energy$Type %in% unwanted.types, ]
+final.energy <- spread(selected.energy, key = Type, value ='Thousand Megawatthours')
 
 
-#join data
-joined <- party %>% left_join(population, by = "State")
-#%>% left_join(datafr, by = "State")
+#join data and change NA to -- and remove DC and remove a second Maine row
+joined <- party %>% left_join(population, by = "State") %>% 
+left_join(final.energy, by = "State")
 joined[is.na(joined)] <- "--"
+joined <- joined[!joined$State == "District of Columbia", ]
+joined <- joined[-(20),]
+
+#export as csv
+export(joined,"./data/joined.csv", format = "csv")
