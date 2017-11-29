@@ -8,26 +8,47 @@
 #
 
 library(shiny)
+library(plotly)
 
-# Define UI for application that draws a histogram
-shinyUI(fluidPage(
+my.ui <- navbarPage(
   
   # Application title
-  titlePanel("Old Faithful Geyser Data"),
+  "Cereal Data",
   
   # Sidebar with a slider input for number of bins 
-  sidebarLayout(
-    sidebarPanel(
-       sliderInput("bins",
-                   "Number of bins:",
-                   min = 1,
-                   max = 50,
-                   value = 30)
-    ),
-    
-    # Show a plot of the generated distribution
-    mainPanel(
-       plotOutput("distPlot")
-    )
+  tabPanel("ScatterPlot",
+           sidebarLayout(
+             sidebarPanel(
+               sliderInput("energy",
+                           "Amount of energy:",
+                           min = 0,
+                           max = 24,
+                           value = 4)
+             ),
+             
+             # Show a plot of the generated distribution
+             mainPanel(
+               plotlyOutput("distPlot")
+             )
+           )
+  ),
+  tabPanel("Histogram",
+           sidebarLayout(
+             sidebarPanel(
+               selectInput('hist.var', "What do you want to histogram?", 
+                           choices = list("How much energy" = "sleep",
+                                          "Which type of energy?" = "pet"
+                           )
+               )
+             ),
+             
+             # Show a plot of the generated distribution
+             mainPanel(
+               plotlyOutput("histPlot")
+             )
+           )
   )
-))
+)
+# Define UI for application that draws a histogram
+shinyUI(my.ui)
+        
