@@ -20,7 +20,7 @@ ScatterGraph <- function(data.frame,
   plot <-  ggplot(data = data.frame, aes(x = data.frame[,x.var],
                                          y=data.frame[,y.var], color = data.frame[,colorVar])) +
     geom_point() +
-    geom_smooth(method  ="glm")+
+    geom_smooth(se = FALSE)+
     labs(title = title, x = x.lab, y = y.lab, color = legend) #+ 
  #   xlim(x.min, x.max)+
    # ylim(y.min, y.max)   
