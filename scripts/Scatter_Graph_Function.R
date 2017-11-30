@@ -18,26 +18,23 @@ ScatterGraph <- function(data.frame,
                       y.min = 0)
 {
   plot <-  ggplot(data = data.frame, aes(x = data.frame[,x.var],
-                                         y=data.frame[,y.var])) +
-    geom_point(aes(color = data.frame[,colorVar])) +
-    geom_smooth()+
-    labs(title = title, x = x.lab, y = y.lab, color = legend) + 
-    xlim(x.min, x.max)+
-    ylim(y.min, y.max)   
+                                         y=data.frame[,y.var], color = data.frame[,colorVar])) +
+    geom_point() +
+    geom_smooth(method  ="glm")+
+    labs(title = title, x = x.lab, y = y.lab, color = legend) #+ 
+ #   xlim(x.min, x.max)+
+   # ylim(y.min, y.max)   
   return(plot)
 }
 
 #sample code:
 #setwd
-#test <- read.csv('./data/intro-survey.csv',stringsAsFactors = FALSE)
-#LineGraph(data.frame = test,
-#          x.var = 'How.many.siblings.do.you.have.', 
-#          y.var = 'How.many.inches.tall.are.you.',
-#          colorVar = 'What.is.your.current.class.standing.', 
-#          title = 'test',
-#          x.lab = "x",
-#          y.lab = "y",
-#          legend = "legend",
-#          x.max = 10, 
-#          y.max = 85,
-#          y.min = 50)
+test <- read.csv('./data/joined.csv',stringsAsFactors = FALSE)
+ScatterGraph(data.frame = test,
+          x.var = 'Population', 
+          y.var = 'total',
+          colorVar = 'Winning.Party', 
+          title = 'test',
+          x.lab = "x",
+          y.lab = "y",
+          legend = "legend")

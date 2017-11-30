@@ -50,7 +50,8 @@ joined <- joined %>%
   mutate(`PC-` = as.numeric(`PC-`)) %>% 
   mutate(TSN = as.numeric(TSN)) %>% 
   mutate(WND = as.numeric(WND)) %>% 
-  mutate(total = BIO +COW +GEO + HYC +`NG-`+NUC+OOG+`PC-`+TSN+WND)
+  mutate(total = BIO +COW +GEO + HYC +`NG-`+NUC+OOG+`PC-`+TSN+WND)%>% 
+  mutate(Population = as.numeric(gsub( "[[:punct:]]" , "",Population)))
   
 
 #export as csv
