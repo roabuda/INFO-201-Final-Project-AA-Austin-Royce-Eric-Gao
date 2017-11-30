@@ -25,11 +25,12 @@ selected.energy <- energy %>% select(description, 'source key', as.character(201
   mutate(State = gsub( " :.*$", "", energy$description)) %>% 
   select(State, 'source key', as.character(2016)) 
 
-unwanted.state<- selected.energy[!selected.energy$State %in% state.name,]
-selected.energy <- selected.energy[!selected.energy$State == unwanted.state, ]
 colnames(selected.energy) <- c("State","Type","Thousand Megawatthours")
 unwanted.types <- c(".A","ALL","AOR")
 selected.energy <- selected.energy[!selected.energy$Type %in% unwanted.types, ]
+selected.energy <- selected.energy %>% filter(State %in% state.name)
+
+#final energy use spread function
 final.energy <- spread(selected.energy, key = Type, value ='Thousand Megawatthours')
 
 #join data and change NA to -- and remove DC and remove a second Maine row
