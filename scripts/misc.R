@@ -32,13 +32,26 @@ unwanted.types <- c(".A","ALL","AOR")
 selected.energy <- selected.energy[!selected.energy$Type %in% unwanted.types, ]
 final.energy <- spread(selected.energy, key = Type, value ='Thousand Megawatthours')
 
-
 #join data and change NA to -- and remove DC and remove a second Maine row
 joined <- party %>% left_join(population, by = "State") %>% 
 left_join(final.energy, by = "State")
 joined[is.na(joined)] <- "--"
 joined <- joined[!joined$State == "District of Columbia", ]
 joined <- joined[-(20),]
+joined[joined == "--" | joined == "NM"] <- 0
+joined <- joined %>% 
+  mutate(BIO = as.numeric(BIO)) %>% 
+  mutate(COW = as.numeric(COW)) %>% 
+  mutate(GEO = as.numeric(GEO)) %>% 
+  mutate(HYC = as.numeric(HYC)) %>% 
+  mutate(`NG-` = as.numeric(`NG-`)) %>% 
+  mutate(NUC = as.numeric(NUC)) %>% 
+  mutate(OOG = as.numeric(OOG)) %>% 
+  mutate(`PC-` = as.numeric(`PC-`)) %>% 
+  mutate(TSN = as.numeric(TSN)) %>% 
+  mutate(WND = as.numeric(WND)) %>% 
+  mutate(total = BIO +COW +GEO + HYC +`NG-`+NUC+OOG+`PC-`+TSN+WND)
+  
 
 #export as csv
 export(joined,"./data/joined.csv", format = "csv")
