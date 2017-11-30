@@ -23,6 +23,10 @@ create.map <- function(min,max,energy)
   colnames(states) <- c("long","lat","group","State")
   states$State <- toupper(states$State)
   
+  states.base <- ggplot(data = states, mapping = aes(x = long, y = lat, group = group)) + 
+    coord_fixed(1.3) + 
+    geom_polygon(color = "black", fill = "gray")
+  
   #plot states with ggplot
   state.base <- ggplot()
   
@@ -34,8 +38,9 @@ create.map <- function(min,max,energy)
   map.data <- inner_join(states, joined, by = "State") 
   
   
-   state.map <- state.base + 
-    geom_polygon(data = map.data, aes(fill = Population), color = "white") +
+   state.map <- states.base + 
+    geom_polygon(data = map.data, aes( fill = Population), color = "white") +
     geom_polygon(color = "black", fill = NA) + theme_void()
+   state.map + scale_fill_gradient(trans = "log10")
 }
 
