@@ -16,7 +16,7 @@ my.ui <- navbarPage(
   "Cereal Data",
   
   # Sidebar with a slider input for number of bins 
-  tabPanel("ScatterPlot",
+  tabPanel("Map",
            sidebarLayout(
              sidebarPanel(
                sliderInput("energy",
@@ -45,6 +45,22 @@ my.ui <- navbarPage(
              # Show a plot of the generated distribution
              mainPanel(
                plotlyOutput("histPlot")
+             )
+           )
+  ),
+  tabPanel("ScatterPlot",
+           sidebarLayout(
+             sidebarPanel(
+               sliderInput("energy",
+                           "Amount of energy:",
+                           min = 0,
+                           max = 24,
+                           value = 4)
+             ),
+             
+             # Show a plot of the generated distribution
+             mainPanel(
+               plotlyOutput("distPlot")
              )
            )
   )
