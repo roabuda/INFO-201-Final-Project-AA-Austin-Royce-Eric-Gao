@@ -12,7 +12,7 @@ library(dplyr)
 library(tidyr)
 library(ggplot2)
 source('./scripts/Scatter_Graph_Function.R')
-
+source('./scripts/histogram.R')
 
 data <- read.csv("./data/joined.csv")
 
