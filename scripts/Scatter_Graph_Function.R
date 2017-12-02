@@ -1,5 +1,6 @@
 library(ggplot2)
 library(dplyr)
+library(plotly)
 
 
 
@@ -17,8 +18,14 @@ ScatterGraph <- function(data.frame,
                       x.min = 0,
                       y.min = 0)
 {
-  plot <-  ggplot(data = data.frame, aes(x = data.frame[,x.var],
-                                         y=data.frame[,y.var], color = data.frame[,colorVar])) +
+  
+Population  <- data.frame[,x.var]
+Watts  <- data.frame[,y.var]
+Party  <- data.frame[,colorVar]
+  plot <-  ggplot(data = data.frame, aes(x = Population,
+                                         y= Watts, 
+                                         color = Party )) +
+   # geom_text(show.legend = F)+
     geom_point() +
     geom_smooth(se = T, method = "lm")+
     labs(title = title, x = x.lab, y = y.lab, color = legend) #+ 
