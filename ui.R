@@ -13,7 +13,7 @@ library(plotly)
 my.ui <- navbarPage(
   
   # Application title
-  "Cereal Data",
+  "Energy of America",
   
   # Sidebar with a slider input for number of bins 
   tabPanel("Map",
@@ -51,16 +51,16 @@ my.ui <- navbarPage(
   tabPanel("ScatterPlot",
            sidebarLayout(
              sidebarPanel(
-               sliderInput("energy",
-                           "Amount of energy:",
+               sliderInput("pop",
+                           "min pop:",
                            min = 0,
-                           max = 24,
-                           value = 4)
+                           max = max(data$Population),
+                           value = max(data$Population))
              ),
              
              # Show a plot of the generated distribution
              mainPanel(
-               plotlyOutput("distPlot")
+               plotlyOutput("scatterPlot")
              )
            )
   )

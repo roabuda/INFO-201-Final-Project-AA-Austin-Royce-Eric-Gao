@@ -10,15 +10,10 @@
 library(shiny)
 library(dplyr)
 library(tidyr)
+library(ggplot2)
+source('./scripts/Scatter_Graph_Function.R')
 
-raw.data <- read.csv('./data/cereal.csv', stringsAsFactors = FALSE)
-raw.data <- raw.data %>% 
-  select(Participant.ID, Response, Poll.Title)
-
-data <- spread(raw.data, key=Poll.Title, value=Response)
-colnames(data) <- c('id', 'pet', 'sleep', 'ta.help', 'raingear')
-
-
+data <- read.csv("./data/joined.csv")
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
@@ -33,6 +28,23 @@ shinyServer(function(input, output) {
             color = chart.data$pet,
             type="scatter") %>% 
       layout(xaxis=list(title="TA Help")) 
+  })
+  
+  
+  output$scatterPlot <- renderPlotly({
+    # Filter data
+    chart.data <- data %>% 
+      filter(input$pop > Population)
+    
+    # Make chart
+    ScatterGraph(data.frame = chart.data,
+                 x.var = 'Population', 
+                 y.var = 'total',
+                 colorVar = 'Winning.Party', 
+                 title = 'Energy Vs Population',
+                 x.lab = "Population",
+                 y.lab = "Energy Consumption (Thousand Mega Watts)",
+                 legend = "State's Party")
   })
   
   output$histPlot <- renderPlotly({
