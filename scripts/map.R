@@ -35,12 +35,11 @@ create.map <- function(min,max,energy)
     coord_fixed(1.3)
   
   #join the states data and the joined data to create the map data
-  map.data <- inner_join(states, joined, by = "State") 
-  
+  map.data <- inner_join(states, joined, by = "State")
   
    state.map <- states.base + 
-    geom_polygon(data = map.data, aes( fill = Population), color = "white") +
-    geom_polygon(color = "black", fill = NA) + theme_void()
-   state.map + scale_fill_gradient(trans = "log10")
+    geom_polygon(data = map.data, aes(fill = Winning.Party), color = "white") +
+    geom_polygon(color = "black", fill = NA) + theme_void() + 
+    scale_fill_manual(name = "State Political Party Inclination",values=c("blue", "red"))
 }
 
