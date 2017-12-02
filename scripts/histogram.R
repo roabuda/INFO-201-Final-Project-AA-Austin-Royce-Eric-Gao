@@ -106,4 +106,40 @@ california.donut.chart
 
 DonutChart <- function(data.frame,
                        state.name,
-                       )
+                       legend.title,
+                       plot.title) {
+  california <- filter(data.frame, State == state.name)
+  california.energy <- data.frame(
+    count = c(california$BIO, 
+              california$COW,
+              california$GEO,
+              california$HYC,
+              california$NG.,
+              california$NUC,
+              california$OOG,
+              california$PC.,
+              california$PEL,
+              california$TSN,
+              california$WND),
+    energy_type = c("BIO", "COW", "GEO", "HYC","NG.","NUC", "OOG", "PC.", "PEL", "TSN", "WND")
+  )
+  
+  # Add addition columns, needed for drawing with geom_rect.
+  california.energy$fraction <- california.energy$count/sum(california.energy$count)
+  california.energy = california.energy[order(california.energy$fraction), ]
+  california.energy$ymax = cumsum(california.energy$fraction)
+  california.energy$ymin = c(0, head(california.energy$ymax, n=-1))
+  
+  #Plot the energy graph of one state
+  california.donut.chart <- ggplot(california.energy, aes(fill=california.energy[,energy_type], ymax=california.energy[,ymax], ymin=california.energy[,ymin], xmax=4, xmin=3)) +
+    geom_rect() +
+    coord_polar(theta="y") +
+    xlim(c(0, 4)) +
+    theme(panel.grid=element_blank()) +
+    theme(axis.text=element_blank()) +
+    theme(axis.ticks=element_blank()) +
+    annotate("text", x = 0, y = 0, label = legend.title) +
+    labs(title=plot.title)
+  
+  return(california.donut.chart)
+}
