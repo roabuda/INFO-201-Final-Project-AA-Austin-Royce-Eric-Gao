@@ -65,49 +65,14 @@ HistogramGraph(data.frame = joined,
 #   labs(title="")
 # p1
 
-##### TEST #####
 
-# For joined data, add additional columns, needed for the drawing the geom_rect
-california <- filter(joined, State == "California")
-california.energy <- data.frame(
-  count = c(california$BIO, 
-            california$COW,
-            california$GEO,
-            california$HYC,
-            california$NG.,
-            california$NUC,
-            california$OOG,
-            california$PC.,
-            california$PEL,
-            california$TSN,
-            california$WND),
-  energy_type = c("BIO", "COW", "GEO", "HYC","NG.","NUC", "OOG", "PC.", "PEL", "TSN", "WND")
-)
 
-# Add addition columns, needed for drawing with geom_rect.
-california.energy$fraction <- california.energy$count/sum(california.energy$count)
-california.energy = california.energy[order(california.energy$fraction), ]
-california.energy$ymax = cumsum(california.energy$fraction)
-california.energy$ymin = c(0, head(california.energy$ymax, n=-1))
-
-#Plot the energy graph of one state
-california.donut.chart <- ggplot(california.energy, aes(fill=energy_type, ymax=ymax, ymin=ymin, xmax=4, xmin=3)) +
-  geom_rect() +
-  coord_polar(theta="y") +
-  xlim(c(0, 4)) +
-  theme(panel.grid=element_blank()) +
-  theme(axis.text=element_blank()) +
-  theme(axis.ticks=element_blank()) +
-  annotate("text", x = 0, y = 0, label = "California") +
-  labs(title="")
-
-california.donut.chart
-
+#### DONUT CHART ####
 
 DonutChart <- function(data.frame,
                        state.name,
-                       legend.title,
-                       plot.title) {
+                       legend.title = "Legent Title",
+                       plot.title = "Title") {
   california <- filter(data.frame, State == state.name)
   california.energy <- data.frame(
     count = c(california$BIO, 
@@ -131,15 +96,55 @@ DonutChart <- function(data.frame,
   california.energy$ymin = c(0, head(california.energy$ymax, n=-1))
   
   #Plot the energy graph of one state
-  california.donut.chart <- ggplot(california.energy, aes(fill=california.energy[,energy_type], ymax=california.energy[,ymax], ymin=california.energy[,ymin], xmax=4, xmin=3)) +
+  california.donut.chart <- ggplot(california.energy, aes(fill=energy_type, ymax=ymax, ymin=ymin, xmax=4, xmin=3)) +
     geom_rect() +
     coord_polar(theta="y") +
     xlim(c(0, 4)) +
     theme(panel.grid=element_blank()) +
     theme(axis.text=element_blank()) +
     theme(axis.ticks=element_blank()) +
-    annotate("text", x = 0, y = 0, label = legend.title) +
+    annotate("text", x = 0, y = 0, label = state.name) +
+    labs(fill = legend.title)+
     labs(title=plot.title)
   
   return(california.donut.chart)
 }
+#### TEST IF CODE WERE RIGHT #####
+# california <- filter(joined, State == "Arizona")
+# california.energy <- data.frame(
+#   count = c(california$BIO, 
+#             california$COW,
+#             california$GEO,
+#             california$HYC,
+#             california$NG.,
+#             california$NUC,
+#             california$OOG,
+#             california$PC.,
+#             california$PEL,
+#             california$TSN,
+#             california$WND),
+#   energy_type = c("BIO", "COW", "GEO", "HYC","NG.","NUC", "OOG", "PC.", "PEL", "TSN", "WND")
+# )
+# california.energy$fraction <- california.energy$count/sum(california.energy$count)
+# california.energy = california.energy[order(california.energy$fraction), ]
+# california.energy$ymax = cumsum(california.energy$fraction)
+# california.energy$ymin = c(0, head(california.energy$ymax, n=-1))
+# 
+# california.donut.chart <- ggplot(california.energy, aes(fill=energy_type, ymax=ymax, ymin=ymin, xmax=4, xmin=3)) +
+#   geom_rect() +
+#   coord_polar(theta="y") +
+#   xlim(c(0, 4)) +
+#   theme(panel.grid=element_blank()) +
+#   theme(axis.text=element_blank()) +
+#   theme(axis.ticks=element_blank()) +
+#   annotate("text", x = 0, y = 0, label = "legend title") +
+#   labs(title="plot title")
+# california.donut.chart
+
+#sample code for 
+DonutChart(data.frame = joined,
+           state.name = "California", 
+           legend.title = "Energy Type", 
+           plot.title = paste0("California ", "Energy Type"))
+
+
