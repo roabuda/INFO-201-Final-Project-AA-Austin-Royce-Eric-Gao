@@ -13,21 +13,21 @@ library(tidyr)
 library(ggplot2)
 source('./scripts/Scatter_Graph_Function.R')
 
+
 data <- read.csv("./data/joined.csv")
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
-  output$distPlot <- renderPlotly({
+  output$histPlot <- renderPlotly({
     # Filter data
-    chart.data <- data %>% 
-      filter(as.numeric(sleep) > as.numeric(input$hours))
-    
+    chart.data <- data 
+      
     # Make chart
-    plot_ly(x = chart.data$ta.help, 
-            y = as.numeric(chart.data$sleep),
-            color = chart.data$pet,
-            type="scatter") %>% 
-      layout(xaxis=list(title="TA Help")) 
+    HistogramGraph(data.frame = chart.data,
+                   y.var = input$hist.var, 
+                   my.title = "Energy Consumption",
+                   y.lab = input$hist.var,
+                   legend.title = input$hist.var)
   })
   
   
@@ -47,7 +47,7 @@ shinyServer(function(input, output) {
                  legend = "State's Party")
   })
   
-  output$histPlot <- renderPlotly({
+  output$distPlot <- renderPlotly({
     if(input$hist.var == 'sleep') {
       chart.data <- as.numeric(data[,input$hist.var])
     } else {

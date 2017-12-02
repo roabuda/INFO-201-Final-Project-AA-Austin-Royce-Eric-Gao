@@ -35,9 +35,18 @@ my.ui <- navbarPage(
   tabPanel("Histogram",
            sidebarLayout(
              sidebarPanel(
-               selectInput('hist.var', "What do you want to histogram?", 
-                           choices = list("How much energy" = "sleep",
-                                          "Which type of energy?" = "pet"
+               selectInput("hist.var", "What do you want to histogram?", 
+                           choices = list("Coal" = "COW",
+                                          "Biomass" = "BIO",
+                                          "Geothermal" = "GEO",
+                                          "Hydroelectric" = "BIO",
+                                          "Natural Gas" = "NG.",
+                                          "Nuclear" = "NUC",
+                                          "Other Gases" = "OOG",
+                                          "Petrolium Coke" = "PC.",
+                                          "Petrolium Liquids" = "PEL",
+                                          "Solar" = "TSN",
+                                          "Wind" = "WND"
                            )
                )
              ),
@@ -55,9 +64,9 @@ my.ui <- navbarPage(
                            "min pop:",
                            min = 0,
                            max = max(data$Population),
-                           value = max(data$Population))
+                           value = c(min(data$Population),max(data$Population)))
              ),
-             
+            
              # Show a plot of the generated distribution
              mainPanel(
                plotlyOutput("scatterPlot")
