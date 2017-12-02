@@ -16,7 +16,7 @@ p <- ggplot(data = data.frame,
      labs(x = "State", y = y.lab, title = my.title, fill = legend.title)+
      # ylim(y.min, y.max)+
      coord_flip()+
-     theme(axis.text.y.left = element_text(face="bold", color = "black", 
+     theme(axis.text.y = element_text(face="bold", color = "black", 
                                         size=8))
  
   return(p)
