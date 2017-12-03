@@ -39,7 +39,7 @@ my.ui <- navbarPage(
                            choices = list("Coal" = "COW",
                                           "Biomass" = "BIO",
                                           "Geothermal" = "GEO",
-                                          "Hydroelectric" = "BIO",
+                                          "Hydroelectric" = "HYC",
                                           "Natural Gas" = "NG.",
                                           "Nuclear" = "NUC",
                                           "Other Gases" = "OOG",

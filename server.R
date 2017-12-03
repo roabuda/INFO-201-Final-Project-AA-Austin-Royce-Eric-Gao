@@ -20,7 +20,8 @@ data <- read.csv("./data/joined.csv")
 shinyServer(function(input, output) {
   output$histPlot <- renderPlotly({
     # Filter data
-    chart.data <- data 
+    chart.data <- data %>% 
+      filter(data[,input$hist.var] > 0)
       
     # Make chart
     HistogramGraph(data.frame = chart.data,
