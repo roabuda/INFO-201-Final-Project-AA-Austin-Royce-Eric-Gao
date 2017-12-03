@@ -16,14 +16,14 @@ HistogramGraph <- function(data.frame,
                            y.lab = "Y Lab",
                            legend.title = "Legend Lab") {
 p <- ggplot(data = data.frame,
-            aes(x = factor(State, levels = State[order(Population)]), y = data.frame[,y.var], fill = data.frame[,y.var])) +
+            aes(x = factor(State, levels = State[order(Population)]), data.frame[,y.var], fill = data.frame[,y.var])) +
      geom_histogram(stat = "identity")+
      # geom_text(aes(label=joined$COW), vjust=-0.3, size=2.5)+
      labs(x = "State", y = y.lab, title = my.title, fill = legend.title)+
-  #  ylim(0, max(data.frame[,y.var]))+
-     #coord_flip()#+
-    theme(axis.text.y = element_text(face="bold", color = "black", 
-                                        size=8))
+     # coord_cartesian(ylim = c(0, max(data.frame$y.var)))+
+     # coord_flip()+
+     theme(axis.text.x = element_text(face="bold", color="#993333", 
+                                            size=10, angle=90))
  
   return(p)
 
@@ -191,7 +191,7 @@ PieChart <- function(data.frame,
 
 #sample code for pie chart 
 p1 <- PieChart(data.frame = joined,
-           state.name = "Arizona", 
+           state.name = "California", 
            legend.title = "Energy Type", 
            plot.title = paste0("California ", "Energy Type"))
 p1
