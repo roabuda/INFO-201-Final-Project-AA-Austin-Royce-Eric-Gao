@@ -22,14 +22,14 @@ my.ui <- navbarPage(
     mainPanel(
       h2("Energy Consumption in the United States"),
       h3("Project Overview"),
-      h5("For our project, we wanted to observe the use of energy throughout the United States and to see how it corrolated to the political inclination and population of each state. We were able to observe this connection with the use of two data sets that we later combined into one."),
+      h5("For our project, we wanted to observe the use of energy throughout the United States and to see how it correlated to the political inclination and population of each state. We were able to observe this connection with the use of two data sets that we later combined into one."),
       h3("Audience"),
       h5("Our target audience for our Final Project are people interested in energy usage and its correlation to seemingly unrelated things (political inclination and population), such as environmentalists. Environmentalists would be interested in this data because it could help them understand why possibly harmful energy (fossil fuels) are used more in certain states versus clean energy usage. This could help think of better ways to address energy usage depending on which state has a bigger problem with the kind of energy they’re using."),
       h3("Data"),
       h5("For our data, we used a data list from the US Energy Information Administration that included all the energy usage data throughout the states from 2016. We also got the electoral college results from the 2016 election from data.world."),
       h3("Questions"),
       h5("-Do more populated states use more clean energy than those that aren’t as populated?
-          -Does the energy consumption by each state corrolate to its political inclination?
+          -Does the energy consumption by each state correlate to its political inclination?
           -What energy is used the most in each state?"),
       h3("Structure"),
       h5("Our tabs include: an interactive map that shows the political inclination of each state and will also display energy information in the form of a pie chart when you hover over each state, a histogram that displays the amount of energy use per state, and a scatter plot that shows the wattage for a population."),
@@ -56,7 +56,7 @@ my.ui <- navbarPage(
              mainPanel(
                plotlyOutput("map"),
                h3("What does the Map represent?"),
-               h5("When using the interactive map, you are able to see the political inclination of each state and how it corrolates to the energy use. You can also see the population of each state when you hover over each state with the coursor."),
+               h5("When using the interactive map, you are able to see the political inclination of each state and how it correlates to the energy use. You can also see the population of each state when you hover over each state with the coursor."),
                h5("You can adjust the information being displayed by adjusting the Range widget and the Select dropbox that gives you the option to choose to display the Democratic or Republican states or both.")
              )
            )
