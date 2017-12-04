@@ -1,7 +1,13 @@
 library(ggplot2)
 library(dplyr)
 library(MASS)
-joined <- read.csv("./data/joined.csv")
+library(ggrepel)
+library(scales)
+library(plotly)
+library(tidyr)
+library(plyr)
+
+joined <- read.csv("./data/joined.csv", stringsAsFactors = FALSE)
 
 #### HISTOGRAM FUNCTION ####
 HistogramGraph <- function(data.frame, 
@@ -10,141 +16,44 @@ HistogramGraph <- function(data.frame,
                            y.lab = "Y Lab",
                            legend.title = "Legend Lab") {
 p <- ggplot(data = data.frame,
-            aes(x = factor(State, levels = State[order(Population)]), data.frame[,y.var], fill = data.frame[,y.var])) +
+            aes(x = factor(State, levels = State[order(data[,y.var], decreasing = TRUE)]), data.frame[,y.var], fill = data.frame[,y.var])) +
      geom_histogram(stat = "identity")+
-     # geom_text(aes(label=joined$COW), vjust=-0.3, size=2.5)+
+     # geom_text(aes(label=data.frame[,y.var]), vjust=-0.3, size=2)+
      labs(x = "State", y = y.lab, title = my.title, fill = legend.title)+
-     # ylim(y.min, y.max)+
-     coord_flip()+
-     theme(axis.text.y = element_text(face="bold", color = "black", 
-                                        size=8))
+     # coord_cartesian(ylim = c(0, max(data.frame$y.var)))+
+     # coord_flip()+
+     theme(axis.text.x = element_text(face="bold", color="#993333", 
+                                            size=10, angle=90))
  
   return(p)
 
 }
 
 #### TEST ####
-# ptest2 <- ggplot(data = joined,
-#             aes(x = factor(State, levels = State[order(Population)]),as.numeric(BIO), fill = as.numeric(BIO))) +
-#   geom_histogram(stat = "identity")+
-#   # geom_text(aes(label=joined$COW), vjust=-0.3, size=2.5)+
-#   labs(aes(x = "State", y = y.lab, title = my.title, fill = legend.title))+
-#   # ylim(y.min, y.max)+
-#   coord_flip()+
-#   theme(axis.text.y.left = element_text(face="bold", color = "black", 
-#                                         size=8))
-# 
-# ptest2
+ptest1 <- ggplot(data = joined,
+            aes(x = factor(State, levels = State[order(joined[,"COW"], decreasing = TRUE)]), joined[,"COW"], fill = joined[,"COW"])) +
+  geom_histogram(stat = "identity")+
+  geom_text(aes(label=joined[,"COW"]), vjust=-0.3, size=2)+
+  labs(x = "State", y = "COW", title = "my.title", fill = "legend.title")+
+  # coord_cartesian(ylim = c(0, max(data.frame$y.var)))+
+  # coord_flip()+
+  theme(axis.text.x = element_text(face="bold", color="#993333", 
+                                   size=10, angle=90))
+ptest1
+p <- ptest1+ geom_line(data=joined, aes(x=as.numeric(State), y=joined[,"COW"]), colour = "red")
+p
+
 
 #Sample Code
 HistogramGraph(data.frame = joined, 
-               y.var = "COW", 
+               y.var = "BIO", 
                my.title = "TEST",
-               y.lab = "COW",
-               legend.title = "COW")
-
-#### DONUT GRAPH TEMPLATE ####
-# Create test data.
-# dat = data.frame(count=c(10, 60, 30), category=c("A", "B", "C"))
-# 
-# # Add addition columns, needed for drawing with geom_rect.
-# dat$fraction = dat$count / sum(dat$count)
-# dat = dat[order(dat$fraction), ]
-# dat$ymax = cumsum(dat$fraction)
-# dat$ymin = c(0, head(dat$ymax, n=-1))
-# 
-# # # Make the plot
-# p1 = ggplot(dat, aes(fill=category, ymax=ymax, ymin=ymin, xmax=4, xmin=3)) +
-#   geom_rect() +
-#   coord_polar(theta="y") +
-#   xlim(c(0, 4)) +
-#   theme(panel.grid=element_blank()) +
-#   theme(axis.text=element_blank()) +
-#   theme(axis.ticks=element_blank()) +
-#   annotate("text", x = 0, y = 0, label = "My Ring plot !") +
-#   labs(title="")
-# p1
+               y.lab = "BIO",
+               legend.title = "BIO")
 
 
 
-#### DONUT CHART ####
 
-DonutChart <- function(data.frame,
-                       state.name,
-                       legend.title = "Legent Title",
-                       plot.title = "Title") {
-  california <- filter(data.frame, State == state.name)
-  california.energy <- data.frame(
-    count = c(california$BIO, 
-              california$COW,
-              california$GEO,
-              california$HYC,
-              california$NG.,
-              california$NUC,
-              california$OOG,
-              california$PC.,
-              california$PEL,
-              california$TSN,
-              california$WND),
-    energy_type = c("BIO", "COW", "GEO", "HYC","NG.","NUC", "OOG", "PC.", "PEL", "TSN", "WND")
-  )
-  
-  # Add addition columns, needed for drawing with geom_rect.
-  california.energy$fraction <- california.energy$count/sum(california.energy$count)
-  california.energy = california.energy[order(california.energy$fraction), ]
-  california.energy$ymax = cumsum(california.energy$fraction)
-  california.energy$ymin = c(0, head(california.energy$ymax, n=-1))
-  
-  #Plot the energy graph of one state
-  california.donut.chart <- ggplot(california.energy, aes(fill=energy_type, ymax=ymax, ymin=ymin, xmax=4, xmin=3)) +
-    geom_rect() +
-    coord_polar(theta="y") +
-    xlim(c(0, 4)) +
-    theme(panel.grid=element_blank()) +
-    theme(axis.text=element_blank()) +
-    theme(axis.ticks=element_blank()) +
-    annotate("text", x = 0, y = 0, label = state.name) +
-    labs(fill = legend.title)+
-    labs(title=plot.title)
-  
-  return(california.donut.chart)
-}
-#### TEST IF CODE WERE RIGHT #####
-# california <- filter(joined, State == "Arizona")
-# california.energy <- data.frame(
-#   count = c(california$BIO, 
-#             california$COW,
-#             california$GEO,
-#             california$HYC,
-#             california$NG.,
-#             california$NUC,
-#             california$OOG,
-#             california$PC.,
-#             california$PEL,
-#             california$TSN,
-#             california$WND),
-#   energy_type = c("BIO", "COW", "GEO", "HYC","NG.","NUC", "OOG", "PC.", "PEL", "TSN", "WND")
-# )
-# california.energy$fraction <- california.energy$count/sum(california.energy$count)
-# california.energy = california.energy[order(california.energy$fraction), ]
-# california.energy$ymax = cumsum(california.energy$fraction)
-# california.energy$ymin = c(0, head(california.energy$ymax, n=-1))
-# 
-# california.donut.chart <- ggplot(california.energy, aes(fill=energy_type, ymax=ymax, ymin=ymin, xmax=4, xmin=3)) +
-#   geom_rect() +
-#   coord_polar(theta="y") +
-#   xlim(c(0, 4)) +
-#   theme(panel.grid=element_blank()) +
-#   theme(axis.text=element_blank()) +
-#   theme(axis.ticks=element_blank()) +
-#   annotate("text", x = 0, y = 0, label = "legend title") +
-#   labs(title="plot title")
-# california.donut.chart
 
-#sample code for 
-DonutChart(data.frame = joined,
-           state.name = "California", 
-           legend.title = "Energy Type", 
-           plot.title = paste0("California ", "Energy Type"))
 
 

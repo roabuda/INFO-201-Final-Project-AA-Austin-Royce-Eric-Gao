@@ -20,7 +20,8 @@ data <- read.csv("./data/joined.csv")
 shinyServer(function(input, output) {
   output$histPlot <- renderPlotly({
     # Filter data
-    chart.data <- data 
+    chart.data <- data %>% 
+      filter(data[,input$hist.var] > 0)
       
     # Make chart
     HistogramGraph(data.frame = chart.data,
@@ -30,21 +31,39 @@ shinyServer(function(input, output) {
                    legend.title = input$hist.var)
   })
   
-  
+
   output$scatterPlot <- renderPlotly({
     # Filter data
+   
     chart.data <- data %>% 
-      filter(input$pop > Population)
+      filter(input$pop >= Population) %>% 
+      filter(input$watt >= total)
+  
     
     # Make chart
+    if(input$conf == T)
+    {
+ conf = T
+    }
+    else{
+      conf = F
+    }
+    if(input$unsure == T)
+    {
+    chart.data[chart.data == 0] <- NA
+    }
+    
     ScatterGraph(data.frame = chart.data,
                  x.var = 'Population', 
-                 y.var = 'total',
+                 y.var = input$energy.type,
                  colorVar = 'Winning.Party', 
                  title = 'Energy Vs Population',
                  x.lab = "Population",
                  y.lab = "Energy Consumption (Thousand Mega Watts)",
-                 legend = "State's Party")
+                 legend = "State's Party",
+                 confidence = conf,
+                 type = input$regression,
+                 per.person = input$per)
   })
   
   output$distPlot <- renderPlotly({

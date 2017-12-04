@@ -16,27 +16,42 @@ ScatterGraph <- function(data.frame,
                       x.max = max(x.var),
                       y.max = max (y.var),
                       x.min = 0,
-                      y.min = 0)
+                      y.min = 0,
+                      confidence = T,
+                      type = "lm",
+                      per.person = F)
 {
   
 Population  <- data.frame[,x.var]
-Watts  <- data.frame[,y.var]
+if(per.person == T)
+{
+  `Thousands of Mega Watts`  <- data.frame[,y.var]/data.frame[,x.var]
+}
+else
+{
+`Thousands of Mega Watts`  <- data.frame[,y.var]
+}
 Party  <- data.frame[,colorVar]
-  plot <-  ggplot(data = data.frame, aes(x = Population,
-                                         y= Watts, 
-                                         color = Party )) +
+  plot <-  ggplot(data = data.frame, aes( 
+                                          x = Population,
+                                         y= `Thousands of Mega Watts`, 
+                                         color = Party
+                                        
+                                        )) +
+    
    # geom_text(show.legend = F)+
-    geom_point() +
-    geom_smooth(se = T, method = "lm")+
-    labs(title = title, x = x.lab, y = y.lab, color = legend) #+ 
- #   xlim(x.min, x.max)+
-   # ylim(y.min, y.max)   
+    geom_point(aes( text = paste0("State: ",data.frame$State )) ) +
+    geom_smooth(se = confidence, method = type)+
+    labs(title = title, x = x.lab, y = y.lab, color = legend) + 
+    scale_color_manual(values=c("#00c6fc", "#b51a00"))
+  #xlim(x.min, x.max)+
+   # ylim(y.min, y.max)
   return(plot)
 }
 
 #sample code:
 #setwd
-
+#if(F == T){
 test <- read.csv('./data/joined.csv',stringsAsFactors = FALSE)
 ScatterGraph(data.frame = test,
           x.var = 'Population', 
@@ -45,4 +60,6 @@ ScatterGraph(data.frame = test,
           title = 'test',
           x.lab = "x",
           y.lab = "y",
-          legend = "legend")
+          legend = "legend",
+          confidence = F)
+#}
