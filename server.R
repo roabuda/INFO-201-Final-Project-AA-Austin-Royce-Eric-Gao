@@ -14,6 +14,7 @@ library(ggplot2)
 source('./scripts/Scatter_Graph_Function.R')
 source('./scripts/histogram.R')
 source('./scripts/map.R')
+source('./scripts/Pie_Chart_Function.R')
 
 
 data <- read.csv("./data/joined.csv", stringsAsFactors = F)
@@ -69,6 +70,20 @@ shinyServer(function(input, output) {
   
   
   ######MAP######
+  output$pie.1 <- renderPlotly({
+    
+    PieChart(data.frame = joined,
+             state.name = "California", 
+             legend.title = "Energy Type", 
+             plot.title = paste0("California ", "Energy Type"))
+  })
+  output$pie.2 <- renderPlotly({
+    
+    PieChart(data.frame = joined,
+             state.name = "California", 
+             legend.title = "Energy Type", 
+             plot.title = paste0("California ", "Energy Type"))
+  })
   output$map <- renderPlotly({
     if(input$political == 0){
       chart.data <- data

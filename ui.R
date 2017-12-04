@@ -66,6 +66,8 @@ my.ui <- navbarPage(
              ),
              mainPanel(
                plotlyOutput("map"),
+               plotlyOutput("pie.1"),
+               plotlyOutput("pie.2"),
                h3("What does the Map represent?"),
                h5("When using the interactive map, you are able to see the political inclination of each state and how it correlates to the energy use. You can also see the population of each state when you hover over each state with the coursor."),
                h5("You can adjust the information being displayed by adjusting the Range widget and the Select dropbox that gives you the option to choose to display the Democratic or Republican states or both.")
