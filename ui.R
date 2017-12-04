@@ -41,7 +41,7 @@ my.ui <- navbarPage(
   tabPanel("Map",
            sidebarLayout(
              sidebarPanel(
-               radioButtons("compare", label = h3("Variable to Compare"),
+               selectInput("compare", label = h3("Variable to Compare"),
                                        choices = list("Population" = "Population",
                                                       "Coal" = "COW",
                                                       "Biomass" = "BIO",
@@ -54,14 +54,15 @@ my.ui <- navbarPage(
                                                       "Petrolium Liquids" = "PEL",
                                                       "Solar" = "TSN",
                                                       "Wind" = "WND",
-                                                      "All" = "total"
-                                       )),
+                                                      "All" = "total")),
                selectInput("political", "Political Side", 
                            choices = list("Both" = 0,
                                           "Republicans" = "Republicans",
-                                          "Democrats" = "Democrats"
-                           )
-               )
+                                          "Democrats" = "Democrats")),
+               selectInput("first.state", "First State", 
+                           choices = state.name),
+               selectInput("second.state", "Second State", 
+                           choices = state.name)
              ),
              mainPanel(
                plotlyOutput("map"),

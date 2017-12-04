@@ -15,6 +15,7 @@ source('./scripts/Scatter_Graph_Function.R')
 source('./scripts/histogram.R')
 source('./scripts/map.R')
 
+
 data <- read.csv("./data/joined.csv", stringsAsFactors = F)
 
 ######Histograph######
@@ -78,6 +79,7 @@ shinyServer(function(input, output) {
     }
     
   CreateMap(chart.data, input$compare)
+  #CompareStates(input$first.state, input$second.state)
   })
   
 })
