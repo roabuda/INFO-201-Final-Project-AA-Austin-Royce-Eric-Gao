@@ -27,10 +27,13 @@ my.ui <- navbarPage(
       h3("Data"),
       h5("For our data, we used a data list from the US Energy Information Administration that included all the energy usage data throughout the states from 2016. We also got the electoral college results from the 2016 election from data.world."),
       h3("Questions"),
-      h5("-Do more populated states use more clean energy than those that aren’t as populated?",<b/r>,
-          "-Does the energy consumption by each state corrolate to its political inclination?",<b/r>,
-          "-What energy is used the most in each state?
-         ")
+      h5("-Do more populated states use more clean energy than those that aren’t as populated?
+          -Does the energy consumption by each state corrolate to its political inclination?
+          -What energy is used the most in each state?"),
+      h3("Structure"),
+      h5("Our tabs include: an interactive map that shows the political inclination of each state and will also display energy information in the form of a pie chart when you hover over each state, a histogram that displays the amount of energy use per state, and a scatter plot that shows the wattage for a population."),
+      h3("Creators"),
+      h5("Austin Chan, Xiaxuan Gao, Royce Abuda, Eric Acero")
       )
       ),
   tabPanel("Map",
@@ -130,7 +133,10 @@ my.ui <- navbarPage(
             
              # Show a plot of the generated distribution
              mainPanel(
-               plotlyOutput("scatterPlot")
+               plotlyOutput("scatterPlot"),
+               h3("What does the Scatter Plot show?"),
+               h5("The interactive Scatter Plot above shows the Energy Consumption in wattage and how it corrolates to the population. When you hover over the dots you will come to realize that they are the representation of the states."),
+               h5("You can change the Scatter Plot to display different data by adjusting the Range widgets or the Select dropboxes. ")
              )
            )
   ),
@@ -138,9 +144,11 @@ my.ui <- navbarPage(
   
   mainPanel(
     h3("US Energy Information Administration"),
-    h4("(https://www.eia.gov/)"),
-    h1(""),
-    h4("Sixth level title")
+    h4("https://www.eia.gov/"),
+    h3("data.world"),
+    h4("https://data.world/dash/2016-electoral-college-results"),
+    h3("United States Census Bureau"),
+    h4("https://www.census.gov/data/tables/2016/demo/popest/state-total.html")
     )
   )
 )
