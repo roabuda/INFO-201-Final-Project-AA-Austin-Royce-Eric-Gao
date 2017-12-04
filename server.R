@@ -13,10 +13,11 @@ library(tidyr)
 library(ggplot2)
 source('./scripts/Scatter_Graph_Function.R')
 source('./scripts/histogram.R')
+source('./scripts/map.R')
 
-data <- read.csv("./data/joined.csv")
+data <- read.csv("./data/joined.csv", stringsAsFactors = F)
 
-# Define server logic required to draw a histogram
+######Histograph######
 shinyServer(function(input, output) {
   output$histPlot <- renderPlotly({
     # Filter data
@@ -31,15 +32,14 @@ shinyServer(function(input, output) {
                    legend.title = input$hist.var)
   })
   
-
+######Scatter######
   output$scatterPlot <- renderPlotly({
     # Filter data
    
     chart.data <- data %>% 
       filter(input$pop >= Population) %>% 
       filter(input$watt >= total)
-  
-    
+
     # Make chart
     if(input$conf == T)
     {
@@ -66,16 +66,11 @@ shinyServer(function(input, output) {
                  per.person = input$per)
   })
   
-  output$distPlot <- renderPlotly({
-    if(input$hist.var == 'sleep') {
-      chart.data <- as.numeric(data[,input$hist.var])
-    } else {
-      chart.data <- data[,input$hist.var]
-    }
-    # Make chart
-    plot_ly(x = chart.data, 
-            type="histogram") %>% 
-      layout(xaxis=list(title=input$hist.var)) 
+  
+  ######MAP######
+  output$map <- renderPlotly({
+    chart.data <- data
+  CreateMap(chart.data,0, 100000, c("PC.","GEO"))
   })
   
 })
