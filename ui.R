@@ -54,7 +54,10 @@ my.ui <- navbarPage(
                )
              ),
              mainPanel(
-               plotlyOutput("map")
+               plotlyOutput("map"),
+               h3("What does the Map represent?"),
+               h5("When using the interactive map, you are able to see the political inclination of each state and how it corrolates to the energy use. You can also see the population of each state when you hover over each state with the coursor."),
+               h5("You can adjust the information being displayed by adjusting the Range widget and the Select dropbox that gives you the option to choose to display the Democratic or Republican states or both.")
              )
            )
   ),
@@ -82,7 +85,9 @@ my.ui <- navbarPage(
              
              # Show a plot of the generated distribution
              mainPanel(
-               plotlyOutput("histPlot")
+               plotlyOutput("histPlot"),
+               h3("What does the Histogram display?"),
+               h5("In this histogram, we are able to see the different energies independently and how much each state consumed each of them in the year 2016. You just have to select the energy you wish to display from the Select dropbox and the histogram will be modified to show you the consumption of that energy in each state.")
              )
            )
   ),
@@ -154,12 +159,14 @@ my.ui <- navbarPage(
   tabPanel("Sources",
   
   mainPanel(
-    h3("US Energy Information Administration"),
-    h4("https://www.eia.gov/"),
-    h3("data.world"),
-    h4("https://data.world/dash/2016-electoral-college-results"),
-    h3("United States Census Bureau"),
-    h4("https://www.census.gov/data/tables/2016/demo/popest/state-total.html")
+    h3("These are the data resources that we used for the purpose of this report:"),
+    h1(" "),
+    h4("US Energy Information Administration"),
+    h5("https://www.eia.gov/"),
+    h4("data.world"),
+    h5("https://data.world/dash/2016-electoral-college-results"),
+    h4("United States Census Bureau"),
+    h5("https://www.census.gov/data/tables/2016/demo/popest/state-total.html")
     )
   )
 )
