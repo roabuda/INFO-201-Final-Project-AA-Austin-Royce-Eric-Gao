@@ -15,23 +15,28 @@ my.ui <- navbarPage(
   # Application title
   "Energy of America",
   
-  # Sidebar with a slider input for number of bins 
+
   tabPanel("Map",
            sidebarLayout(
              sidebarPanel(
-               sliderInput("energy",
+               sliderInput("min",
                            "Amount of energy:",
                            min = 0,
-                           max = 24,
-                           value = 4)
+                           max = 1000000,
+                           value = 0),
+               sliderInput("max",
+                           "Amount of energy:",
+                           min = 0,
+                           max = 1000000,
+                           value = 10000)
              ),
-             
-             # Show a plot of the generated distribution
              mainPanel(
-               plotlyOutput("distPlot")
+               plotlyOutput("map")
              )
            )
   ),
+  
+  
   tabPanel("Histogram",
            sidebarLayout(
              sidebarPanel(
@@ -57,6 +62,8 @@ my.ui <- navbarPage(
              )
            )
   ),
+  
+  
   tabPanel("ScatterPlot",
            sidebarLayout(
              sidebarPanel(
@@ -110,6 +117,7 @@ my.ui <- navbarPage(
                )
              ),
             
+           
              # Show a plot of the generated distribution
              mainPanel(
                plotlyOutput("scatterPlot")
