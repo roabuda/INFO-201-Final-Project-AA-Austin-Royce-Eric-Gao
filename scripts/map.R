@@ -3,7 +3,6 @@
 library(dplyr)
 library(plotly)
 library(ggplot2)
-library(Hmisc)
 
 #get joined data
 joined <- read.csv("./data/joined.csv", stringsAsFactors = FALSE)
