@@ -16,6 +16,21 @@ my.ui <- navbarPage(
   "Energy of America",
   
 
+  # The title page for the app that mentions what our project is about
+  tabPanel("Introduction",
+ 
+    mainPanel(
+      h2("Energy Consumption in the United States"),
+      h3("Project Overview"),
+      h5("For our project, we wanted to observe the use of energy throughout the United States and to see how it corrolated to the political inclination and population of each state. We were able to observe this connection with the use of two data sets that we later combined into one."),
+      h3("Audience"),
+      h5("Our target audience for our Final Project are people interested in energy usage and its correlation to seemingly unrelated things (political inclination and population), such as environmentalists. Environmentalists would be interested in this data because it could help them understand why possibly harmful energy (fossil fuels) are used more in certain states versus clean energy usage. This could help think of better ways to address energy usage depending on which state has a bigger problem with the kind of energy they’re using."),
+      h3("Data"),
+      h5("For our data, we used a data list from the US Energy Information Administration that included all the energy usage data throughout the states from 2016. We also got the electoral college results from the 2016 election from data.world."),
+      h3("Questions")
+      )
+      ),
+
   tabPanel("Map",
            sidebarLayout(
              sidebarPanel(
@@ -51,7 +66,8 @@ my.ui <- navbarPage(
                                           "Petrolium Coke" = "PC.",
                                           "Petrolium Liquids" = "PEL",
                                           "Solar" = "TSN",
-                                          "Wind" = "WND"
+                                          "Wind" = "WND",
+                                          "All" = "total"
                            )
                )
              ),
@@ -123,6 +139,15 @@ my.ui <- navbarPage(
                plotlyOutput("scatterPlot")
              )
            )
+  ),
+  tabPanel("Sources",
+  
+  mainPanel(
+    h3("US Energy Information Administration"),
+    h4("(https://www.eia.gov/)"),
+    h1(""),
+    h4("Sixth level title")
+    )
   )
 )
 # Define UI for application that draws a histogram
