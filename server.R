@@ -69,8 +69,15 @@ shinyServer(function(input, output) {
   
   ######MAP######
   output$map <- renderPlotly({
-    chart.data <- data
-  CreateMap(chart.data,0, 100000, c("PC.","GEO"))
+    if(input$political == 0){
+      chart.data <- data
+    }
+    else{
+    chart.data <- data %>% 
+      filter(input$political == Winning.Party)
+    }
+    
+  CreateMap(chart.data)
   })
   
 })

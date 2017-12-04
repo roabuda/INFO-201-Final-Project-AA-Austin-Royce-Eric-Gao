@@ -41,16 +41,17 @@ my.ui <- navbarPage(
   tabPanel("Map",
            sidebarLayout(
              sidebarPanel(
-               sliderInput("min",
+               sliderInput("",
                            "Amount of energy:",
                            min = 0,
                            max = 1000000,
                            value = 0),
-               sliderInput("max",
-                           "Amount of energy:",
-                           min = 0,
-                           max = 1000000,
-                           value = 10000)
+               selectInput("political", "Political Side", 
+                           choices = list("Both" = 0,
+                                          "Republicans" = "Republicans",
+                                          "Democrats" = "Democrats"
+                           )
+               )
              ),
              mainPanel(
                plotlyOutput("map")
