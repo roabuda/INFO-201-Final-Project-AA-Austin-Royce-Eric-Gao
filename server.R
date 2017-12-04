@@ -77,7 +77,7 @@ shinyServer(function(input, output) {
       filter(input$political == Winning.Party)
     }
     
-  CreateMap(chart.data)
+  CreateMap(chart.data, input$compare)
   })
   
 })
