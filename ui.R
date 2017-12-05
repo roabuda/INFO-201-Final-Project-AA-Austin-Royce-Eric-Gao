@@ -9,8 +9,11 @@
 
 library(shiny)
 library(plotly)
+library(shinythemes)
 
-my.ui <- navbarPage(
+my.ui <- fluidPage(theme = shinytheme("slate"),
+
+navbarPage(
   
   # Application title
   "Energy of America",
@@ -193,6 +196,7 @@ my.ui <- navbarPage(
     h5("https://www.census.gov/data/tables/2016/demo/popest/state-total.html")
     )
   )
+)
 )
 # Define UI for application that draws a histogram
 shinyUI(my.ui)
