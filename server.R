@@ -16,7 +16,6 @@ source('./scripts/histogram.R')
 source('./scripts/map.R')
 source('./scripts/Pie_Chart_Function.R')
 
-
 data <- read.csv("./data/joined.csv", stringsAsFactors = F)
 
 ######Histograph######
@@ -27,11 +26,11 @@ shinyServer(function(input, output) {
       filter(data[,input$hist.var] > 0)
       
     # Make chart
-    HistogramGraph(data.frame = chart.data,
+    HistogramLineGraph(data.frame = chart.data,
                    y.var = input$hist.var, 
                    my.title = "Energy Consumption",
-                   y.lab = input$hist.var,
-                   legend.title = input$hist.var)
+                   bar.title  = input$hist.var,
+                   line.title  = input$hist.var)
   })
   
 ######Scatter######
@@ -70,6 +69,7 @@ shinyServer(function(input, output) {
   
   
   ######MAP######
+
   output$pie.1 <- renderPlotly({
     
     PieChart(data.frame = joined,
@@ -88,7 +88,7 @@ shinyServer(function(input, output) {
   output$slider <- renderUI({
     sliderInput("new.variable.max", "Variable Max", min=0, max=max(data[,input$compare]), value=max(data[,input$compare]))
   })
-  
+
   output$map <- renderPlotly({
 
     if(input$political == 0){
@@ -106,8 +106,10 @@ shinyServer(function(input, output) {
     }
     
   CreateMap(chart.data, input$compare)
+
   })
 
   output$value <- renderText({h5("Cali")})
   
 })
+
