@@ -10,7 +10,7 @@
 library(shiny)
 library(plotly)
 library(shinythemes)
-
+data <- read.csv("./data/joined.csv", stringsAsFactors = F)
 my.ui <- fluidPage(theme = shinytheme("slate"),
 
 navbarPage(

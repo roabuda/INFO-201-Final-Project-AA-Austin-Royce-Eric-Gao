@@ -3,7 +3,7 @@ library(dplyr)
 library(tidyr)
 library(plyr)
 library(scales)
-joined <- read.csv("./data/joined.csv", stringsAsFactors = FALSE)
+#joined <- read.csv("./data/joined.csv", stringsAsFactors = FALSE)
 
 #### PIE CHART ####
 
