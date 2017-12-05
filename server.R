@@ -112,4 +112,3 @@ shinyServer(function(input, output) {
   output$value <- renderText({h5("Cali")})
   
 })
-
