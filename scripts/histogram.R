@@ -28,6 +28,8 @@ HistogramLineGraph <- function(data.frame,
     color = "black"
   )
 
+  t <- list(
+    color = 'white') 
   
 #make the histogram  
   p1 <- plot_ly(data = data.frame, x = ~data.frame[,y.var], y = ~reorder(State, data.frame[,y.var]), name = bar.title,
@@ -39,7 +41,7 @@ HistogramLineGraph <- function(data.frame,
                         showticklabels = TRUE,
                         tickfont = f2,
                         exponentformat = "E"),
-           xaxis = list(zeroline = FALSE, showline = FALSE, showticklabels = TRUE, showgrid = TRUE)) 
+           xaxis = list(zeroline = FALSE, showline = FALSE, showticklabels = TRUE, showgrid = TRUE),font = t) 
  
 #make the line graph
   p2 <- plot_ly(data = data.frame, x = ~data.frame[,y.var], y = ~reorder(State, data.frame[,y.var]), name = line.title,
@@ -49,7 +51,7 @@ HistogramLineGraph <- function(data.frame,
                         linecolor = 'rgba(102, 102, 102, 0.8)', linewidth = 2,
                         domain = c(0, 0.85)),
            xaxis = list(zeroline = FALSE, showline = FALSE, showticklabels = TRUE, showgrid = TRUE,
-                        side = 'top', dtick = 25000)) 
+                        side = 'top', dtick = 25000),font = t) 
 
 #merge them together
   p <- subplot(p1, p2) %>%
@@ -58,7 +60,9 @@ HistogramLineGraph <- function(data.frame,
                          font = list(size = 10)),
            margin = list(l = 100, r = 20, t = 70, b = 70),
            paper_bgcolor = 'rgb(248, 248, 255)',
-           plot_bgcolor = 'rgb(248, 248, 255)') 
+           plot_bgcolor = 'rgb(248, 248, 255)') %>% 
+    layout(paper_bgcolor="#272b30") %>% 
+    layout(plot_bgcolor="#272b30") 
   
   return(p)
 

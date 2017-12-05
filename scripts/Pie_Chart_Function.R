@@ -3,7 +3,7 @@ library(dplyr)
 library(tidyr)
 library(plyr)
 library(scales)
-joined <- read.csv("./data/joined.csv", stringsAsFactors = FALSE)
+#joined <- read.csv("./data/joined.csv", stringsAsFactors = FALSE)
 
 #### PIE CHART ####
 
@@ -49,6 +49,10 @@ PieChart <- function(data.frame,
     pad = 4
   )
   
+  #text
+  t <- list(
+    color = 'white')
+  
   #Plot the energy graph of one state
   california.donut.chart <- p1 <- plot_ly(california.energy,
                                           labels = ~energy_type,
@@ -59,7 +63,11 @@ PieChart <- function(data.frame,
                                           textfont = list(color = '#000000', size = 8)) %>%
     layout(title = plot.title,  showlegend = T,legend = l,
            xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
-            yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+
+           yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE), font = t)%>% 
+
+    layout(plot_bgcolor="#272b30")
+
   
   return(california.donut.chart)
 }

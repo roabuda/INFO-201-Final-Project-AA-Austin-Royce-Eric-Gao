@@ -17,6 +17,7 @@ source('./scripts/map.R')
 source('./scripts/Pie_Chart_Function.R')
 
 data <- read.csv("./data/joined.csv", stringsAsFactors = F)
+data.both <- read.csv("./data/joined_new.csv", stringsAsFactors = F)
 
 ######Histograph######
 shinyServer(function(input, output) {
@@ -31,6 +32,14 @@ shinyServer(function(input, output) {
                    my.title = "Energy Consumption",
                    bar.title  = input$hist.var,
                    line.title  = input$hist.var)
+  })
+  output$changePlot <- renderPlotly({
+    # Filter data
+    chart.data <- data.both 
+ 
+    
+    p <- plot_ly(chart.data, x = ~State, y = chart.data[,input$hist.var.c], type = 'bar', name = 'SF Zoo') %>% 
+      layout(yaxis = list(title = 'Count'), font = c(size = 8))
   })
   
 ######Scatter######
@@ -68,23 +77,28 @@ shinyServer(function(input, output) {
   })
   
   
+  
+  
   ######MAP######
 
   output$pie.1 <- renderPlotly({
     
-    PieChart(data.frame = joined,
+    PieChart(data.frame = data,
              state.name = input$first.state,  
              legend.title = "Energy Type", 
              plot.title = paste(input$first.state, "Energy Type"))
   })
   output$pie.2 <- renderPlotly({
     
-    PieChart(data.frame = joined,
+    PieChart(data.frame = data,
              state.name = input$second.state, 
              legend.title = "Energy Type", 
              plot.title = paste(input$second.state, "Energy Type"))
   })
   
+  
+  #these two compare to the input slider, but I want to compare to the new slider in the output
+  #i need to change the input$vairable.max variable to the output variable
   output$slider <- renderUI({
     sliderInput("new.variable.max", "Variable Max", min=0, max=max(data[,input$compare]), value=max(data[,input$compare]))
   })
@@ -105,11 +119,13 @@ shinyServer(function(input, output) {
       chart.data[chart.data == 0] <- NA
     }
     
+
+    #creates reactive slider that changes range depending on what variable was chosen to compare
+    #can't call output values in server
+
+    
   CreateMap(chart.data, input$compare)
 
   })
-
-  output$value <- renderText({h5("Cali")})
   
 })
-

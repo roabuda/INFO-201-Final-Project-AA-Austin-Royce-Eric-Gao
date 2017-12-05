@@ -10,7 +10,8 @@
 library(shiny)
 library(plotly)
 library(shinythemes)
-
+data <- read.csv("./data/joined.csv", stringsAsFactors = F)
+data.both <- read.csv("./data/joined_new.csv", stringsAsFactors = F)
 my.ui <- fluidPage(theme = shinytheme("slate"),
 
 navbarPage(
@@ -126,7 +127,7 @@ navbarPage(
                            )
                )
              ),
-             
+
              # Show a plot of the generated distribution
              mainPanel(
                plotlyOutput("histPlot"),
@@ -136,6 +137,36 @@ navbarPage(
            )
   ),
   
+  tabPanel("Change in energy usage",
+           sidebarLayout(
+             sidebarPanel(
+               selectInput("hist.var.c", "What do you want to histogram?", 
+                           choices = list("Coal" = "COW.c",
+                                          "Biomass" = "BIO.c",
+                                          "Geothermal" = "GEO.c",
+                                          "Hydroelectric" = "HYC.c",
+                                          "Natural Gas" = "NG..c",
+                                          "Nuclear" = "NUC.c",
+                                          "Other Gases" = "OOG.c",
+                                          "Petrolium Coke" = "PC..c",
+                                          "Petrolium Liquids" = "PEL.c",
+                                          "Solar" = "TSN.c",
+                                          "Wind" = "WND.c",
+                                          "All" = "total.c"
+                           )
+               )
+             ),
+             
+             # Show a plot of the generated distribution
+             mainPanel(
+               plotlyOutput("changePlot"),
+               h3("What does the Histogram display?"),
+               h5("In this histogram, we are able to see the different energies independently and how much each state consumed each of them in the year 2016. You just have to select the energy you wish to display from the Select dropbox and the histogram will be modified to show you the consumption of that energy in each state.")
+             )
+           )
+  ),
+  
+             
   
   tabPanel("ScatterPlot",
            sidebarLayout(
@@ -200,17 +231,29 @@ navbarPage(
              )
            )
   ),
+  tabPanel("Why This Matters?",
+    h3("Global Warming...Climate Change...it's real"),
+      tags$hr(),
+        tags$img(src = "https://www.popsci.com/sites/popsci.com/files/earth_from_the_iss.jpg", width = "437px", height = "300px"),
+            tags$img(src = "https://ecochiccayman.files.wordpress.com/2015/02/melting-ice-polar-bear-on-206311.jpg", width = "437px", height = "300px"),
+    h5("In our world today, we are faced with an issue. An issue that will define the course of history in the years to come. An issue that will affect not just us humans but also every being on this Earth. This issue is commonly known as Global Warming."),
+    h5("It is as it sounds-- the warming of our world. This is detrimental to us in the sense that with our climate rising in temperature, our polar ice caps are melting and therefore, the ocean levels are rising as well. This affects the coasts of all the continents and could leave millions, if not billions homeless if the ocean levels flooded major cities."),
+    h5("The reason the Earth is heating up is because of carbon emissions and other natural gases that get released into our atmosphere every single day. Since the Industrial Revolution, factories, power plants and later cars have released these gases that trap the Sun's energy in our atmosphere and prevent it from escaping into space as it should. This in return heats up the Earth. This is known as the Green House Effect."),
+    h5("And it's not just us humans. Animals could go extinct if their habitats are affected by the global climate change. Polar Bears are Endangered Species to this date with the melting of the Northern ice cap. Animals are having to migrate to different areas of the world to try and save their existence. But sometimes the transition to a new territory isn't so smooth. They might not get used to the new environment or they might act as an invasive species that could dismantal the food chain in that territory. In the end, all of this are the reprecussions of global warming. We are altering the balance of nature and in return we will end up not only causing the extinction of animals, but also our own."),
+    h5("That is why we also created this report, to educate the common folk of the occurances of what is going on in our world today. We are unfortunately lead by an authoritative figure (*cough *cough Donald Trump) that doesn't believe that the issue of Global Warming is worth our time. But you know what, we don't need him to believe in it so long as the greater population does and acts upon it to make a difference in saving this great planet we call home. ")
+  ),
   tabPanel("Sources",
   
   mainPanel(
     h3("These are the data resources that we used for the purpose of this report:"),
+      tags$hr(),
     h1(" "),
     h4("US Energy Information Administration"),
-    h5("https://www.eia.gov/"),
+      tags$a(href="https://www.eia.gov/", "Click here for the link"),
     h4("data.world"),
-    h5("https://data.world/dash/2016-electoral-college-results"),
+      tags$a(href="https://data.world/dash/2016-electoral-college-results", "Click here for the link"),
     h4("United States Census Bureau"),
-    h5("https://www.census.gov/data/tables/2016/demo/popest/state-total.html")
+      tags$a(href="https://www.census.gov/data/tables/2016/demo/popest/state-total.html", "Click here for the link")
     )
   )
 )
