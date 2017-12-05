@@ -11,6 +11,7 @@ library(shiny)
 library(plotly)
 library(shinythemes)
 data <- read.csv("./data/joined.csv", stringsAsFactors = F)
+data.both <- read.csv("./data/joined_new.csv", stringsAsFactors = F)
 my.ui <- fluidPage(theme = shinytheme("slate"),
 
 navbarPage(
@@ -126,7 +127,7 @@ navbarPage(
                            )
                )
              ),
-             
+
              # Show a plot of the generated distribution
              mainPanel(
                plotlyOutput("histPlot"),
@@ -136,6 +137,36 @@ navbarPage(
            )
   ),
   
+  tabPanel("Change in energy usage",
+           sidebarLayout(
+             sidebarPanel(
+               selectInput("hist.var.c", "What do you want to histogram?", 
+                           choices = list("Coal" = "COW.c",
+                                          "Biomass" = "BIO.c",
+                                          "Geothermal" = "GEO.c",
+                                          "Hydroelectric" = "HYC.c",
+                                          "Natural Gas" = "NG..c",
+                                          "Nuclear" = "NUC.c",
+                                          "Other Gases" = "OOG.c",
+                                          "Petrolium Coke" = "PC..c",
+                                          "Petrolium Liquids" = "PEL.c",
+                                          "Solar" = "TSN.c",
+                                          "Wind" = "WND.c",
+                                          "All" = "total.c"
+                           )
+               )
+             ),
+             
+             # Show a plot of the generated distribution
+             mainPanel(
+               plotlyOutput("changePlot"),
+               h3("What does the Histogram display?"),
+               h5("In this histogram, we are able to see the different energies independently and how much each state consumed each of them in the year 2016. You just have to select the energy you wish to display from the Select dropbox and the histogram will be modified to show you the consumption of that energy in each state.")
+             )
+           )
+  ),
+  
+             
   
   tabPanel("ScatterPlot",
            sidebarLayout(
