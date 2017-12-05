@@ -22,6 +22,8 @@ CreateMap <- function(data.frame,compare)
   min <- min(data.frame$compare)
   max <- max(data.frame$compare)
   
+  t <- list(
+    color = 'white')
   #make state bounderies white
   l <- list(color = toRGB("white"), width = 2)
   # specify some map projection/options
@@ -37,8 +39,10 @@ CreateMap <- function(data.frame,compare)
     colorbar(title = compare) %>%
     layout(
       title = paste(compare,"Amount per State"),
-      geo = g
-    )
+      geo = g, font = t
+    ) %>% 
+    layout(paper_bgcolor="#272b30") %>% 
+    layout(plot_bgcolor="#272b30") 
   
   return(p)
 }

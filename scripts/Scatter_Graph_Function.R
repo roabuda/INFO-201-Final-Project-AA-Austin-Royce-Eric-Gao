@@ -43,7 +43,25 @@ Party  <- data.frame[,colorVar]
     geom_point(aes( text = paste0("State: ",data.frame$State )) ) +
     geom_smooth(se = confidence, method = type)+
     labs(title = title, x = x.lab, y = y.lab, color = legend) + 
-    scale_color_manual(values=c("#00c6fc", "#b51a00"))
+    scale_color_manual(values=c("#00fcff", "#ff2600")) + 
+    theme_dark()+
+    theme(plot.background = element_rect(fill = "#272b30"))+
+    theme(plot.margin=unit(c(1,1,1.5,1.2),"cm"), 
+          axis.text.x=element_text(colour="white"),
+          axis.text.y=element_text(colour="white"),
+          axis.title.x=element_text(colour="white"),
+          axis.title.y=element_text(colour="white"),
+          title = element_text(colour="white"), 
+          panel.background = element_rect(fill = "#272b30",
+        colour = "#4189c7",
+         size = 0.5, linetype = "solid"),
+          panel.grid.major = element_line(size = 0.5, linetype = 'solid',
+                                          colour = "white"), 
+          panel.grid.minor = element_line(size = 0.25, linetype = 'solid',
+                                          colour = "white"),
+        legend.background = element_rect(fill="#272b30"),
+        legend.text = element_text(colour="white")
+        )
   #xlim(x.min, x.max)+
    # ylim(y.min, y.max)
   return(plot)
