@@ -41,7 +41,7 @@ my.ui <- navbarPage(
   tabPanel("Map",
            sidebarLayout(
              sidebarPanel(
-               selectInput("compare", label = h3("Variable to Compare"),
+               selectInput("compare", "Variable to Compare",
                                        choices = list("Population" = "Population",
                                                       "Coal" = "COW",
                                                       "Biomass" = "BIO",
@@ -55,12 +55,20 @@ my.ui <- navbarPage(
                                                       "Solar" = "TSN",
                                                       "Wind" = "WND",
                                                       "All" = "total")),
+               
+               sliderInput("variable.max", "Variable Max", min = 0, 
+                max = 35000000, value = 900000),
+           
+               uiOutput("slider"),
+               
                selectInput("political", "Political Side", 
                            choices = list("Both" = 0,
                                           "Republicans" = "Republicans",
                                           "Democrats" = "Democrats")),
+           
                selectInput("first.state", "First State", 
                            choices = state.name),
+           
                selectInput("second.state", "Second State", 
                            choices = state.name)
              ),

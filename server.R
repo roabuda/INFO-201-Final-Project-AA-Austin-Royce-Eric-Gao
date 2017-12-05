@@ -73,28 +73,39 @@ shinyServer(function(input, output) {
   output$pie.1 <- renderPlotly({
     
     PieChart(data.frame = joined,
-             state.name = "California", 
+             state.name = input$first.state,  
              legend.title = "Energy Type", 
-             plot.title = paste0("California ", "Energy Type"))
+             plot.title = paste(input$first.state, "Energy Type"))
   })
   output$pie.2 <- renderPlotly({
     
     PieChart(data.frame = joined,
-             state.name = "California", 
+             state.name = input$second.state, 
              legend.title = "Energy Type", 
-             plot.title = paste0("California ", "Energy Type"))
+             plot.title = paste(input$second.state, "Energy Type"))
   })
+  
+  
+  #these two compare to the input slider, but I want to compare to the new slider in the output
+  #i need to change the input$vairable.max variable to the output variable
   output$map <- renderPlotly({
     if(input$political == 0){
-      chart.data <- data
+      chart.data <- data %>%
+        filter(data[,input$compare] <= input$variable.max)
     }
     else{
-    chart.data <- data %>% 
+    chart.data <- data %>%
+      filter(data[,input$compare] <= input$variable.max) %>% 
       filter(input$political == Winning.Party)
     }
     
+    #creates reactive slider that changes range depending on what variable was chosen to compare
+    #can't call output values in server
+    output$slider <- renderUI({
+      sliderInput("new.variable.max", "New Variable Max", min=0, max=max(data[,input$compare]), value=max(data[,input$compare]))
+    })
+    
   CreateMap(chart.data, input$compare)
-  #CompareStates(input$first.state, input$second.state)
   })
   
 })

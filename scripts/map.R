@@ -3,8 +3,6 @@ library(dplyr)
 library(plotly)
 library(ggplot2)
 
-#source pie chart function
-source("./scripts/Pie_Chart_Function.R")
 
 #create a function that uses the joined data and calculates the min and max of whichever
 #type of varaible to compare (either population or type of energy), a variable of what type of energy is being compared, and shows each
@@ -42,21 +40,5 @@ CreateMap <- function(data.frame,compare)
       geo = g
     )
   
-  return(p)
-}
-
-#create function that takes in two states and creates a subplot of the two states using the
-#PieChart function.
-StatePieCharts <- function(first.state,second.state)
-{
-  p1 <- PieChart(data.frame = joined,
-                 state.name = "California", 
-                 legend.title = "Energy Type", 
-                 plot.title = paste0("California ", "Energy Type"))
-  p2 <- PieChart(data.frame = joined,
-               state.name = "Washington", 
-               legend.title = "Energy Type", 
-               plot.title = paste0("Washington ", "Energy Type"))
-  p <- subplot(p1,p2, nrows = 2)
   return(p)
 }
