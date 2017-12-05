@@ -51,7 +51,7 @@ navbarPage(
       )
       ),
 
-  tabPanel("Map",
+  tabPanel("Map/Pie Chart",
            sidebarLayout(
              sidebarPanel(
                selectInput("compare", "Variable to Compare",
