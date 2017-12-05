@@ -3,9 +3,6 @@ library(dplyr)
 library(plotly)
 library(ggplot2)
 
-#get joined data and population for testing
-#data.frame <- read.csv("./data/joined.csv", stringsAsFactors = FALSE)
-#compare <- "BIO"
 
 #create a function that uses the joined data and calculates the min and max of whichever
 #type of varaible to compare (either population or type of energy), a variable of what type of energy is being compared, and shows each
