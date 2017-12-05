@@ -37,9 +37,8 @@ HistogramLineGraph <- function(data.frame,
                 marker = list(color = 'rgba(50, 171, 96, 0.6)',
                               line = list(color = 'rgba(50, 171, 96, 1.0)', width = 1))) %>%
     layout(yaxis = list(showgrid = FALSE, showline = FALSE, showticklabels = TRUE, domain= c(0, 0.85),title = "STATE",
-                        titlefont = f1,
+                        font = t
                         showticklabels = TRUE,
-                        tickfont = f2,
                         exponentformat = "E"),
            xaxis = list(zeroline = FALSE, showline = FALSE, showticklabels = TRUE, showgrid = TRUE),font = t) 
  

@@ -49,6 +49,7 @@ joined.16 <- joined %>%
   mutate(NUC = as.numeric(NUC)) %>% 
   mutate(OOG = as.numeric(OOG)) %>% 
   mutate(`PC-` = as.numeric(`PC-`)) %>% 
+  mutate(PEL = as.numeric(PEL)) %>% 
   mutate(TSN = as.numeric(TSN)) %>% 
   mutate(WND = as.numeric(WND)) %>% 
   mutate(total = BIO +COW +GEO + HYC +`NG-`+NUC+OOG+`PC-`+TSN+WND)%>% 
@@ -86,6 +87,7 @@ joined.15 <- joined %>%
   mutate(NUC = as.numeric(NUC)) %>% 
   mutate(OOG = as.numeric(OOG)) %>% 
   mutate(`PC-` = as.numeric(`PC-`)) %>% 
+  mutate(PEL = as.numeric(PEL)) %>% 
   mutate(TSN = as.numeric(TSN)) %>% 
   mutate(WND = as.numeric(WND)) %>% 
   mutate(total = BIO +COW +GEO + HYC +`NG-`+NUC+OOG+`PC-`+TSN+WND)%>% 
@@ -103,6 +105,7 @@ joined<- left_join(joined.16,joined.15, by = "State") %>%
   mutate(NUC.c = NUC.x-NUC.y) %>% 
   mutate(OOG.c = OOG.x-OOG.y) %>% 
   mutate(`PC-.c` =`PC-.x`-`PC-.y` ) %>% 
+  mutate(PEL.c = PEL.x -PEL.y) %>% 
   mutate(TSN.c = TSN.x-TSN.y) %>% 
   mutate(WND.c = WND.x-WND.y) %>% 
   mutate(total.c = BIO.c +COW.c +GEO.c + HYC.c +`NG-.c`+NUC.c+OOG.c+`PC-.c`+TSN.c+WND.c)

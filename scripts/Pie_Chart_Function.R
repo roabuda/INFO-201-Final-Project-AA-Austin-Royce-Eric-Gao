@@ -65,7 +65,7 @@ PieChart <- function(data.frame,
            xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
 
            yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE), font = t)%>% 
-
+    layout(paper_bgcolor = "#272b30") %>% 
     layout(plot_bgcolor="#272b30")
 
   
