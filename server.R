@@ -39,7 +39,9 @@ shinyServer(function(input, output) {
  
     
     p <- plot_ly(chart.data, x = ~State, y = chart.data[,input$hist.var.c], type = 'bar', name = 'SF Zoo') %>% 
-      layout(yaxis = list(title = 'Count'), font = c(size = 8))
+      layout(yaxis = list(title = 'Count'), font = list(size = 8, color = 'white'))%>% 
+      layout(paper_bgcolor="#272b30") %>% 
+      layout(plot_bgcolor="#272b30") 
   })
   
 ######Scatter######
