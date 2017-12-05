@@ -125,7 +125,8 @@ navbarPage(
                                           "Wind" = "WND",
                                           "All" = "total"
                            )
-               )
+               ),
+               uiOutput("slider2")
              ),
 
              # Show a plot of the generated distribution

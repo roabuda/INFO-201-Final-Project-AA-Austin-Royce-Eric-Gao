@@ -12,28 +12,34 @@ joined <- read.csv("./data/joined.csv", stringsAsFactors = FALSE)
 #### HISTOGRAM FUNCTION ####
 HistogramLineGraph <- function(data.frame, 
                            y.var, 
+                           max.range,
+                           party,
                            my.title = "Tittle",
-                           bar.title = "Energy",
-                           line.title = "State"
+                           bar.title = "Energy"
                            ) {
- #Set the boundry
+  
+ #change the range of the data
+  data1 <- data.frame %>% 
+    filter(data.frame[,y.var] < max.range & data.frame[,y.var] > 0)
+  
+ #Set the boundry and text color
    f1 <- list(
     family = "Arial, sans-serif",
     size = 15,
-    color = "lightgrey"
+    color = "white"
   )
   f2 <- list(
     family = "Old Standard TT, serif",
-    size = 5,
-    color = "black"
+    size = 6,
+    color = "white"
   )
 
   t <- list(
     color = 'white') 
   
-#make the histogram  
-  p1 <- plot_ly(data = data.frame, x = ~data.frame[,y.var], y = ~reorder(State, data.frame[,y.var]), name = bar.title,
-                type = 'bar', orientation = 'h',text = ~data.frame[,y.var], textposition = 'auto',
+  #make the histogram
+  p1 <- plot_ly(data = data1, x = ~data1[,y.var], y = ~reorder(State, data1[,y.var]), name = bar.title,
+                type = 'bar', orientation = 'h',text = ~data1[,y.var], textposition = 'auto',
                 marker = list(color = 'rgba(50, 171, 96, 0.6)',
                               line = list(color = 'rgba(50, 171, 96, 1.0)', width = 1))) %>%
     layout(yaxis = list(showgrid = FALSE, showline = FALSE, showticklabels = TRUE, domain= c(0, 0.85),title = "STATE",
@@ -41,40 +47,22 @@ HistogramLineGraph <- function(data.frame,
                         showticklabels = TRUE,
                         tickfont = f2,
                         exponentformat = "E"),
-           xaxis = list(zeroline = FALSE, showline = FALSE, showticklabels = TRUE, showgrid = TRUE),font = t) 
- 
-#make the line graph
-  p2 <- plot_ly(data = data.frame, x = ~data.frame[,y.var], y = ~reorder(State, data.frame[,y.var]), name = line.title,
-                type = 'scatter', mode = 'lines+markers',
-                line = list(color = 'rgb(128, 0, 128)')) %>%
-    layout(yaxis = list(showgrid = FALSE, showline = TRUE, showticklabels = FALSE,
-                        linecolor = 'rgba(102, 102, 102, 0.8)', linewidth = 2,
-                        domain = c(0, 0.85)),
-           xaxis = list(zeroline = FALSE, showline = FALSE, showticklabels = TRUE, showgrid = TRUE,
-                        side = 'top', dtick = 25000),font = t) 
-
-#merge them together
-  p <- subplot(p1, p2) %>%
-    layout(title = my.title,
-           legend = list(x = 0.029, y = 1.038,
-                         font = list(size = 10)),
-           margin = list(l = 100, r = 20, t = 70, b = 70),
-           paper_bgcolor = 'rgb(248, 248, 255)',
-           plot_bgcolor = 'rgb(248, 248, 255)') %>% 
+           xaxis = list(zeroline = FALSE, showline = FALSE, showticklabels = TRUE, showgrid = TRUE, title = y.var),font = t) %>% 
     layout(paper_bgcolor="#272b30") %>% 
-    layout(plot_bgcolor="#272b30") 
+    layout(plot_bgcolor="#272b30") %>% 
+    layout(title = my.title)
   
-  return(p)
+  return(p1)
 
 }
 
 
 ###### SAMPLE CODE FOR HISOTGRAM #######
 HistogramLineGraph(data.frame = joined,
+                   max.range = max(joined[,"COW"]),
                    y.var = "COW",
                    my.title = "My Tittle",
-                   bar.title = "bar_title",
-                   line.title = "line_title")
+                   bar.title = "bar_title")
 
 # #### TEST ####
 # ptest1 <- ggplot(data = joined,
@@ -178,4 +166,31 @@ m <- list(
 #   #                 showarrow = FALSE)
 # p
 # 
+f1 <- list(
+  family = "Arial, sans-serif",
+  size = 15,
+  color = "white"
+)
+f2 <- list(
+  family = "Old Standard TT, serif",
+  size = 5,
+  color = "white"
+)
 
+t <- list(
+  color = 'white') 
+
+p1 <- plot_ly(data = joined, x = ~joined[,"COW"], y = ~reorder(State, joined[,"COW"]), name = "bar_title",
+              type = 'bar', orientation = 'h',text = ~joined[,"COW"], textposition = 'auto',
+              marker = list(color = 'rgba(50, 171, 96, 0.6)',
+                            line = list(color = 'rgba(50, 171, 96, 1.0)', width = 1))) %>%
+  layout(yaxis = list(showgrid = FALSE, showline = FALSE, showticklabels = TRUE, domain= c(0, 0.85),title = "STATE",
+                      titlefont = f1,
+                      showticklabels = TRUE,
+                      tickfont = f2,
+                      exponentformat = "E"),
+         xaxis = list(zeroline = FALSE, showline = FALSE, showticklabels = TRUE, showgrid = TRUE),font = t) %>% 
+  layout(paper_bgcolor="#272b30") %>% 
+  layout(plot_bgcolor="#272b30") %>% 
+  layout(title = "Survey")
+p1
