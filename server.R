@@ -14,6 +14,7 @@ library(ggplot2)
 source('./scripts/Scatter_Graph_Function.R')
 source('./scripts/histogram.R')
 source('./scripts/map.R')
+source('./scripts/Pie_Chart_Function.R')
 
 data <- read.csv("./data/joined.csv", stringsAsFactors = F)
 
@@ -68,16 +69,52 @@ shinyServer(function(input, output) {
   
   
   ######MAP######
+
+  output$pie.1 <- renderPlotly({
+    
+    PieChart(data.frame = joined,
+             state.name = input$first.state,  
+             legend.title = "Energy Type", 
+             plot.title = paste(input$first.state, "Energy Type"))
+  })
+  output$pie.2 <- renderPlotly({
+    
+    PieChart(data.frame = joined,
+             state.name = input$second.state, 
+             legend.title = "Energy Type", 
+             plot.title = paste(input$second.state, "Energy Type"))
+  })
+  
+  
+  #these two compare to the input slider, but I want to compare to the new slider in the output
+  #i need to change the input$vairable.max variable to the output variable
+  output$slider <- renderUI({
+    sliderInput("new.variable.max", "Variable Max", min=0, max=max(data[,input$compare]), value=max(data[,input$compare]))
+  })
+
   output$map <- renderPlotly({
+
     if(input$political == 0){
-      chart.data <- data
+      chart.data <- data %>%
+        filter(data[,input$compare] <= input$new.variable.max)
     }
     else{
-    chart.data <- data %>% 
+    chart.data <- data %>%
+      filter(data[,input$compare] <= input$new.variable.max) %>% 
       filter(input$political == Winning.Party)
     }
+    if(input$map.zero == F)
+    {
+      chart.data[chart.data == 0] <- NA
+    }
     
-  CreateMap(chart.data)
+
+    #creates reactive slider that changes range depending on what variable was chosen to compare
+    #can't call output values in server
+
+    
+  CreateMap(chart.data, input$compare)
+
   })
   
 })
