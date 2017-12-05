@@ -21,6 +21,8 @@ my.ui <- navbarPage(
  
     mainPanel(
       h2("Energy Consumption in the United States"),
+        tags$hr(),
+          tags$img(src = "https://www.carbonbrief.org/wp-content/uploads/2016/05/Stock-Fort-McMurray.jpg", width = "800px", height = "300px"),
       h3("Project Overview"),
       h5("For our project, we wanted to observe the use of energy throughout the United States and to see how it correlated to the political inclination and population of each state. We were able to observe this connection with the use of two data sets that we later combined into one."),
       h3("Audience"),
@@ -28,13 +30,21 @@ my.ui <- navbarPage(
       h3("Data"),
       h5("For our data, we used a data list from the US Energy Information Administration that included all the energy usage data throughout the states from 2016. We also got the electoral college results from the 2016 election from data.world."),
       h3("Questions"),
-      h5("-Do more populated states use more clean energy than those that aren’t as populated?
-          -Does the energy consumption by each state correlate to its political inclination?
-          -What energy is used the most in each state?"),
+      h5("-Do more populated states use more clean energy than those that aren’t as populated?",
+         tags$br(),
+          "-Does the energy consumption by each state correlate to its political inclination?",
+         tags$br(),
+          "-What energy is used the most in each state?"),
       h3("Structure"),
       h5("Our tabs include: an interactive map that shows the political inclination of each state and will also display energy information in the form of a pie chart when you hover over each state, a histogram that displays the amount of energy use per state, and a scatter plot that shows the wattage for a population."),
       h3("Creators"),
-      h5("Austin Chan, Xiaxuan Gao, Royce Abuda, Eric Acero")
+      h5("Austin Chan",
+          tags$br(),
+           "Xiaxuan Gao", 
+          tags$br(),
+           "Royce Abuda", 
+          tags$br(),
+           "Eric Acero")
       )
       ),
 
