@@ -21,20 +21,28 @@ data.both <- read.csv("./data/joined_new.csv", stringsAsFactors = F)
 
 ######Histograph######
 shinyServer(function(input, output) {
+  
+  #set the variable max
+  output$slider2 <- renderUI({
+    sliderInput("new.variable.max1", "Variable Max", min=0, max=max(data[,input$hist.var]), value=max(data[,input$hist.var]))
+  }) 
+  
   output$histPlot <- renderPlotly({
     # Filter data
     chart.data <- data %>% 
       filter(data[,input$hist.var] > 0)
-      
+
+    
     # Make chart
     HistogramLineGraph(data.frame = chart.data,
-                   y.var = input$hist.var, 
+                   y.var = input$hist.var,
+                   max.range = input$new.variable.max1,
                    my.title = "Energy Consumption",
-                   bar.title  = input$hist.var,
-                   line.title  = input$hist.var)
+                   bar.title  = input$hist.var)
   })
   
   
+
   output$max.slider <- renderUI({
     sliderInput("change.max", "Variable Max", min=0, max=max(data.both[,input$hist.var.c]), value=max(data.both[,input$hist.var.c]))
   })
@@ -42,7 +50,7 @@ shinyServer(function(input, output) {
   output$min.slider <- renderUI({
     sliderInput("change.min", "Variable Min", max=0, min=min(data.both[,input$hist.var.c]), value=min(data.both[,input$hist.var.c]))
   })
-  
+
   output$changePlot <- renderPlotly({
     # Filter data
     if(input$remove == T)
