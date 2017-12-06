@@ -11,6 +11,7 @@ library(shiny)
 library(dplyr)
 library(tidyr)
 library(ggplot2)
+library(packcircles)
 source('./scripts/Scatter_Graph_Function.R')
 source('./scripts/histogram.R')
 source('./scripts/map.R')
@@ -41,6 +42,113 @@ shinyServer(function(input, output) {
                        bar.title  = input$hist.var)
   })
   
+  
+  
+  output$usa.energy<- renderPlotly({
+
+    usa.data <- data.frame(
+      count = c(sum(data$BIO), 
+                sum(data$COW),
+                sum(data$GEO),
+                sum(data$HYC),
+                sum(data$NG.),
+                sum(data$NUC),
+                    sum(data$OOG),
+                        sum(data$PC.),
+                            sum(data$PEL),
+                                sum(data$TSN),
+                                    sum(data$WND)),
+      energy_type = c("BIO", "COW", "GEO", "HYC","NG.","NUC", "OOG", "PC.", "PEL", "TSN", "WND")
+    ) %>%
+      filter(count != 0)
+    
+    # Add addition columns, needed for drawing with geom_rect.
+    usa.data$fraction <- usa.data$count/sum(usa.data$count)
+    usa.data = usa.data[order(usa.data$fraction), ]
+    usa.data$ymax = cumsum(usa.data$fraction)
+    usa.data$ymin = c(0, head(usa.data$ymax, n=-1))
+    
+    #Define legend paramter and margin of the graph
+    l <- list( x=1.2, y=0.5,
+               font = list(
+                 family = "sans-serif",
+                 size = 10,
+                 color = "#000"),
+               bgcolor = "#E2E2E2",
+               bordercolor = "#FFFFFF",
+               borderwidth = 2)
+    m <- list(
+      b = 200,
+      t = 200,
+      pad = 4
+    )
+    
+    s <- list(
+      l = 50,
+      r = 50,
+      b = 100,
+      t = 50,
+      pad = 4
+    )
+    
+    #text
+    t <- list(
+      color = 'white')
+    
+    #Plot the energy graph of one state
+    usa.total.energy <- p1 <- plot_ly(usa.data,
+                                            labels = ~energy_type,
+                                            values = ~fraction,
+                                            type = 'pie',
+                                            textposition = 'outside',
+                                            textinfo = 'label+percent',
+                                            textfont = list(color = 'white', size = 11)) %>%
+      layout(title = "2016 USA Total Energy Consumption",  showlegend = T,legend = l,
+             xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+             yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE), font = t)%>% 
+      layout(paper_bgcolor = "#272b30") %>% 
+      layout(plot_bgcolor="#272b30")
+    usa.total.energy
+  })
+  
+  output$bubble <- renderPlotly({
+    # Create data
+    data.1=data.frame(State= data$State, `Thousands of Megawatts` =data$total) 
+    
+    # Generate the layout. This function return a dataframe with one line per bubble. 
+    # It gives its center (x and y) and its radius, proportional of the value
+    packing <- circleProgressiveLayout(data.1$Thousands.of.Megawatts, sizetype='area')
+    
+    # We can add these packing information to the initial data frame
+    data.1 = cbind(data.1, packing)
+    
+    # Check that radius is proportional to value. We don't want a linear relationship, since it is the AREA that must be proportionnal to the value
+    plot(data.1$radius, data.1$Thousands.of.Megawatts)
+    
+    # The next step is to go from one center + a radius to the coordinates of a circle that
+    # is drawn by a multitude of straight lines.
+    dat.gg <- circleLayoutVertices(packing, npoints=50)
+    
+    # Make the plot
+    ggplot() + 
+      
+      # Make the bubbles
+      geom_polygon(data = dat.gg, aes(x, y, group = id, fill=as.factor(id)), colour = "black", alpha = 0.6, text = data.1$State ) +
+      
+      # Add text in the center of each bubble + control its size
+      geom_text(data = data.1, aes(x, y, size=Thousands.of.Megawatts, label = State)) +
+      scale_size_continuous(range = c(1,4)) +
+      
+      # General theme:
+      theme_void() + 
+      theme(legend.position="none") +
+      coord_equal()+
+              coord_fixed()+
+      ggtitle("Total Energy used by each State\nIn Thousands of Megawatts")
+      
+      
+      
+  })
   
   
   output$max.slider <- renderUI({

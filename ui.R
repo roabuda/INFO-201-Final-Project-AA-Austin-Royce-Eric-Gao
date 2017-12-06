@@ -22,19 +22,19 @@ navbarPage(
 
   # The title page for the app that mentions what our project is about
   tabPanel("Introduction",
- 
-    mainPanel(
       tags$blockquote(
         h2("Energy Consumption in the United States"),
           tags$hr(),
-            tags$img(src = "https://www.carbonbrief.org/wp-content/uploads/2016/05/Stock-Fort-McMurray.jpg", width = "800px", height = "300px"),
+        plotlyOutput("bubble", width = "100%",height = "400px")
+      ),
+        tags$blockquote(
         h3("Project Overview"),
         h5("For our project, we wanted to observe the use of energy throughout the United States and to see how it correlated to the political inclination and population of each state. We were able to observe this connection with the use of two data sets that we later combined into one."),
         h3("Audience"),
         h5("Our target audience for our Final Project are people interested in energy usage and its correlation to seemingly unrelated things (political inclination and population), such as environmentalists. Environmentalists would be interested in this data because it could help them understand why possibly harmful energy (fossil fuels) are used more in certain states versus clean energy usage. This could help think of better ways to address energy usage depending on which state has a bigger problem with the kind of energy they’re using."),
         h3("Data"),
         h5("For our data, we used a data list from the US Energy Information Administration that included all the energy usage data throughout the states from 2016. We also got the electoral college results from the 2016 election from data.world."),
-        h3("Questions"),
+         h3("Questions"),
         h5("-Do more populated states use more clean energy than those that aren’t as populated?",
            tags$br(),
             "-Does the energy consumption by each state correlate to its political inclination?",
@@ -51,14 +51,13 @@ navbarPage(
             tags$br(),
              "Eric Acero")
           )
-        )
+        
       ),
   tabPanel("Why This Matters?",
            tags$blockquote(
              h3("Global Warming...Climate Change...it's real"),
              tags$hr(),
-             tags$img(src = "https://www.popsci.com/sites/popsci.com/files/earth_from_the_iss.jpg", width = "420px", height = "300px"),
-             tags$img(src = "https://ecochiccayman.files.wordpress.com/2015/02/melting-ice-polar-bear-on-206311.jpg", width = "420px", height = "300px"),
+             tags$img(src = "https://www.carbonbrief.org/wp-content/uploads/2016/05/Stock-Fort-McMurray.jpg", width = "100%",height = "300px"),
              h5("In our world today, we are faced with an issue. An issue that will define the course of history in the years to come. An issue that will affect not just us humans but also every being on this Earth. This issue is commonly known as Global Warming."),
              h5("It is as it sounds-- the warming of our world. This is detrimental to us in the sense that with our climate rising in temperature, our polar ice caps are melting and therefore, the ocean levels are rising as well. This affects the coasts of all the continents and could leave millions, if not billions homeless if the ocean levels flooded major cities."),
              h5("The reason the Earth is heating up is because of carbon emissions and other natural gases that get released into our atmosphere every single day. Since the Industrial Revolution, factories, power plants and later cars have released these gases that trap the Sun's energy in our atmosphere and prevent it from escaping into space as it should. This in return heats up the Earth. This is known as the Green House Effect."),
@@ -115,8 +114,10 @@ navbarPage(
                   as NA values. If you want to compare states energy usages individually, you can 
                   select 2 states to see percantages of how much of each type of energy is used."),
                plotlyOutput("map"),
-               plotlyOutput("pie.1",width = "100%", height = "900px"),
-               plotlyOutput("pie.2",width = "100%", height = "900px")
+               splitLayout(cellWidths = c('50%','50%'),
+                           plotlyOutput("pie.1", height = 500),
+               plotlyOutput("pie.2", height = 500)),
+               plotlyOutput("usa.energy", width = "60%", height = 600)
               
              
                )

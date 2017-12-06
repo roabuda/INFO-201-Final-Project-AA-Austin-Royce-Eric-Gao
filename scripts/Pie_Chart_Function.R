@@ -12,28 +12,28 @@ PieChart <- function(data.frame,
                      legend.title = "Legent Title",
                      plot.title = "Title") {
   #filter the specific state data that we want
-  california <- filter(data.frame, State == state.name)
-  california.energy <- data.frame(
-    count = c(california$BIO, 
-              california$COW,
-              california$GEO,
-              california$HYC,
-              california$NG.,
-              california$NUC,
-              california$OOG,
-              california$PC.,
-              california$PEL,
-              california$TSN,
-              california$WND),
+  type.of <- filter(data.frame, State == state.name)
+  type.of.energy <- data.frame(
+    count = c(type.of$BIO, 
+              type.of$COW,
+              type.of$GEO,
+              type.of$HYC,
+              type.of$NG.,
+              type.of$NUC,
+              type.of$OOG,
+              type.of$PC.,
+              type.of$PEL,
+              type.of$TSN,
+              type.of$WND),
     energy_type = c("BIO", "COW", "GEO", "HYC","NG.","NUC", "OOG", "PC.", "PEL", "TSN", "WND")
   ) %>%
   filter(count != 0)
   
   # Add addition columns, needed for drawing with geom_rect.
-  california.energy$fraction <- california.energy$count/sum(california.energy$count)
-  california.energy = california.energy[order(california.energy$fraction), ]
-  california.energy$ymax = cumsum(california.energy$fraction)
-  california.energy$ymin = c(0, head(california.energy$ymax, n=-1))
+  type.of.energy$fraction <- type.of.energy$count/sum(type.of.energy$count)
+  type.of.energy = type.of.energy[order(type.of.energy$fraction), ]
+  type.of.energy$ymax = cumsum(type.of.energy$fraction)
+  type.of.energy$ymin = c(0, head(type.of.energy$ymax, n=-1))
   
   #Define legend paramter and margin of the graph
   l <- list( x=1.2, y=0.5,
@@ -63,7 +63,7 @@ PieChart <- function(data.frame,
     color = 'white')
   
   #Plot the energy graph of one state
-  california.donut.chart <- p1 <- plot_ly(california.energy,
+  type.of.pie.chart <- p1 <- plot_ly(type.of.energy,
                                           labels = ~energy_type,
                                           values = ~fraction,
                                           type = 'pie',
@@ -77,38 +77,38 @@ PieChart <- function(data.frame,
     layout(plot_bgcolor="#272b30")
 
   
-  return(california.donut.chart)
+  return(type.of.pie.chart)
 }
 
 p1 <- PieChart(data.frame = joined,
-               state.name = "California", 
+               state.name = "type.of", 
                legend.title = "Energy Type", 
-               plot.title = paste0("California ", "Energy Type"))
+               plot.title = paste0("type.of ", "Energy Type"))
 p1
 
 
 
 ##### TEST #####
-# california <- filter(joined, State == "California")
-# california.energy <- data.frame(
-#   count = c(california$BIO, 
-#             california$COW,
-#             california$GEO,
-#             california$HYC,
-#             california$NG.,
-#             california$NUC,
-#             california$OOG,
-#             california$PC.,
-#             california$PEL,
-#             california$TSN,
-#             california$WND),
+# type.of <- filter(joined, State == "type.of")
+# type.of.energy <- data.frame(
+#   count = c(type.of$BIO, 
+#             type.of$COW,
+#             type.of$GEO,
+#             type.of$HYC,
+#             type.of$NG.,
+#             type.of$NUC,
+#             type.of$OOG,
+#             type.of$PC.,
+#             type.of$PEL,
+#             type.of$TSN,
+#             type.of$WND),
 #   energy_type = c("BIO", "COW", "GEO", "HYC","NG.","NUC", "OOG", "PC.", "PEL", "TSN", "WND")
 # ) %>% 
 #   filter(count != 0)
 # 
 # # Add addition columns, needed for drawing with geom_rect.
-# california.energy$fraction <- california.energy$count/sum(california.energy$count)
-# california.energy = california.energy[order(california.energy$fraction), ]
-# california.energy$ymax = cumsum(california.energy$fraction)
-# california.energy$ymin = c(0, head(california.energy$ymax, n=-1))
+# type.of.energy$fraction <- type.of.energy$count/sum(type.of.energy$count)
+# type.of.energy = type.of.energy[order(type.of.energy$fraction), ]
+# type.of.energy$ymax = cumsum(type.of.energy$fraction)
+# type.of.energy$ymin = c(0, head(type.of.energy$ymax, n=-1))
 
