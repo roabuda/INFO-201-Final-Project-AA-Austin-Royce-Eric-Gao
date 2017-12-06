@@ -25,7 +25,8 @@ PieChart <- function(data.frame,
               california$TSN,
               california$WND),
     energy_type = c("BIO", "COW", "GEO", "HYC","NG.","NUC", "OOG", "PC.", "PEL", "TSN", "WND")
-  )
+  ) %>%
+  filter(count != 0)
   
   # Add addition columns, needed for drawing with geom_rect.
   california.energy$fraction <- california.energy$count/sum(california.energy$count)
@@ -43,10 +44,8 @@ PieChart <- function(data.frame,
              bordercolor = "#FFFFFF",
              borderwidth = 2)
   m <- list(
-    l = 0,
-    r = 0,
-    b = 50,
-    t = 50,
+    b = 200,
+    t = 200,
     pad = 4
   )
   
@@ -61,13 +60,14 @@ PieChart <- function(data.frame,
                                           type = 'pie',
                                           textposition = 'outside',
                                           textinfo = 'label+percent',
-                                          autosize = T,
-                                          margin = m) %>%
+                                          textfont = list(color = '#000000', size = 8)) %>%
     layout(title = plot.title,  showlegend = T,legend = l,
            xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+
            yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE), font = t)%>% 
-    layout(paper_bgcolor="#272b30") %>% 
+    layout(paper_bgcolor = "#272b30") %>% 
     layout(plot_bgcolor="#272b30")
+
   
   return(california.donut.chart)
 }
@@ -77,3 +77,30 @@ p1 <- PieChart(data.frame = joined,
                legend.title = "Energy Type", 
                plot.title = paste0("California ", "Energy Type"))
 p1
+
+
+
+##### TEST #####
+# california <- filter(joined, State == "California")
+# california.energy <- data.frame(
+#   count = c(california$BIO, 
+#             california$COW,
+#             california$GEO,
+#             california$HYC,
+#             california$NG.,
+#             california$NUC,
+#             california$OOG,
+#             california$PC.,
+#             california$PEL,
+#             california$TSN,
+#             california$WND),
+#   energy_type = c("BIO", "COW", "GEO", "HYC","NG.","NUC", "OOG", "PC.", "PEL", "TSN", "WND")
+# ) %>% 
+#   filter(count != 0)
+# 
+# # Add addition columns, needed for drawing with geom_rect.
+# california.energy$fraction <- california.energy$count/sum(california.energy$count)
+# california.energy = california.energy[order(california.energy$fraction), ]
+# california.energy$ymax = cumsum(california.energy$fraction)
+# california.energy$ymin = c(0, head(california.energy$ymax, n=-1))
+

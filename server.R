@@ -21,25 +21,56 @@ data.both <- read.csv("./data/joined_new.csv", stringsAsFactors = F)
 
 ######Histograph######
 shinyServer(function(input, output) {
+  
+  #set the variable max
+  output$slider2 <- renderUI({
+    sliderInput("new.variable.max1", "Variable Max", min=0, max=max(data[,input$hist.var]), value=max(data[,input$hist.var]))
+  }) 
+  
   output$histPlot <- renderPlotly({
     # Filter data
     chart.data <- data %>% 
       filter(data[,input$hist.var] > 0)
-      
+
+    
     # Make chart
     HistogramLineGraph(data.frame = chart.data,
-                   y.var = input$hist.var, 
+                   y.var = input$hist.var,
+                   max.range = input$new.variable.max1,
                    my.title = "Energy Consumption",
-                   bar.title  = input$hist.var,
-                   line.title  = input$hist.var)
+                   bar.title  = input$hist.var)
   })
+  
+  
+
+  output$max.slider <- renderUI({
+    sliderInput("change.max", "Variable Max", min=0, max=max(data.both[,input$hist.var.c]), value=max(data.both[,input$hist.var.c]))
+  })
+  
+  output$min.slider <- renderUI({
+    sliderInput("change.min", "Variable Min", max=0, min=min(data.both[,input$hist.var.c]), value=min(data.both[,input$hist.var.c]))
+  })
+
   output$changePlot <- renderPlotly({
     # Filter data
-    chart.data <- data.both 
+    if(input$remove == T)
+    {
+    chart.data <- data.both %>% 
+      filter(data.both[,input$hist.var.c] != 0)
+    }
+    else
+    {
+      chart.data <- data.both 
+    }
+    chart.data <- chart.data %>% 
+      filter(input$change.max >= chart.data[,input$hist.var.c])%>% 
+      filter(input$change.min <= chart.data[,input$hist.var.c])
+
  
     
-    p <- plot_ly(chart.data, x = ~State, y = chart.data[,input$hist.var.c], type = 'bar', name = 'SF Zoo') %>% 
-      layout(yaxis = list(title = 'Count'), font = list(size = 8, color = 'white'))%>% 
+    p <- plot_ly(chart.data, x = ~reorder(State, chart.data[,input$hist.var.c]), y = chart.data[,input$hist.var.c], type = 'bar', name = 'SF Zoo') %>% 
+      layout(yaxis = list(title = 'Thousands of MegaWatts'), font = list(size = 8, color = 'white'), 
+             xaxis = list(title = "", tickangle = -35))%>% 
       layout(paper_bgcolor="#272b30") %>% 
       layout(plot_bgcolor="#272b30") 
   })
