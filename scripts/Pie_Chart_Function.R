@@ -80,11 +80,11 @@ PieChart <- function(data.frame,
   return(type.of.pie.chart)
 }
 
-p1 <- PieChart(data.frame = joined,
-               state.name = "type.of", 
-               legend.title = "Energy Type", 
-               plot.title = paste0("type.of ", "Energy Type"))
-p1
+# p1 <- PieChart(data.frame = joined,
+#                state.name = state.name, 
+#                legend.title = "Energy Type", 
+#                plot.title = paste0("type.of ", "Energy Type"))
+# p1
 
 
 

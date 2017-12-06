@@ -29,19 +29,21 @@ navbarPage(
       ),
         tags$blockquote(
         h3("Project Overview"),
-        h5("For our project, we wanted to observe the use of energy throughout the United States and to see how it correlated to the political inclination and population of each state. We were able to observe this connection with the use of two data sets that we later combined into one."),
+        h5("For our project, we wanted to observe the use of energy throughout the United States and to see how it correlated to the political inclination and population of each state. We were able to observe this connection with the use of three data sets that we later combined into one."),
         h3("Audience"),
-        h5("Our target audience for our Final Project are people interested in energy usage and its correlation to seemingly unrelated things (political inclination and population), such as environmentalists. Environmentalists would be interested in this data because it could help them understand why possibly harmful energy (fossil fuels) are used more in certain states versus clean energy usage. This could help think of better ways to address energy usage depending on which state has a bigger problem with the kind of energy they’re using."),
+        h5("Our target audience for our Final Project are people interested in seeing energy usage and its correlation to political inclination and population,such as environmentalists and civil activists. With this data, activists can focus their resources on certain states and potentialy know which party to lobby. This could help americans think of potentially better ways to address energy usage on a state by state basis."),
         h3("Data"),
-        h5("For our data, we used a data list from the US Energy Information Administration that included all the energy usage data throughout the states from 2016. We also got the electoral college results from the 2016 election from data.world."),
+        h5("For our data, we used a data list from the US Energy Information Administration that included all the energy usage data throughout the states from 2016. We also got the electoral college results from the 2016 election from data.world. Population data was from the United states Census Bureau.All data unless otherwise noted is from 2016."),
          h3("Questions"),
         h5("-Do more populated states use more clean energy than those that aren’t as populated?",
            tags$br(),
             "-Does the energy consumption by each state correlate to its political inclination?",
            tags$br(),
-            "-What energy is used the most in each state?"),
+            "-Does energy usage and population have a linear relationship"),
         h3("Structure"),
-        h5("Our tabs include: an interactive map that shows the political inclination of each state and will also display energy information in the form of a pie chart when you hover over each state, a histogram that displays the amount of energy use per state, and a scatter plot that shows the wattage for a population."),
+        h5("Our tabs include: an interactive map that shows the political inclination of each state and will also display energy information in the form of a pie chart when you hover over each state, 
+           a histogram that displays the amount of energy use per state, a bar graph that displays the change in energy usage from 2015 to 2016, 
+           and a scatter plot that shows the wattage for a population."),
         h3("Creators"),
         h5("Austin Chan",
             tags$br(),
@@ -62,7 +64,7 @@ navbarPage(
              h5("It is as it sounds-- the warming of our world. This is detrimental to us in the sense that with our climate rising in temperature, our polar ice caps are melting and therefore, the ocean levels are rising as well. This affects the coasts of all the continents and could leave millions, if not billions homeless if the ocean levels flooded major cities."),
              h5("The reason the Earth is heating up is because of carbon emissions and other natural gases that get released into our atmosphere every single day. Since the Industrial Revolution, factories, power plants and later cars have released these gases that trap the Sun's energy in our atmosphere and prevent it from escaping into space as it should. This in return heats up the Earth. This is known as the Green House Effect."),
              h5("And it's not just us humans. Animals could go extinct if their habitats are affected by the global climate change. Polar Bears are Endangered Species to this date with the melting of the Northern ice cap. Animals are having to migrate to different areas of the world to try and save their existence. But sometimes the transition to a new territory isn't so smooth. They might not get used to the new environment or they might act as an invasive species that could dismantal the food chain in that territory. In the end, all of this are the reprecussions of global warming. We are altering the balance of nature and in return we will end up not only causing the extinction of animals, but also our own."),
-             h5("That is why we also created this report, to educate the common folk of the occurances of what is going on in our world today. We are unfortunately lead by an authoritative figure (*cough *cough Donald Trump) that doesn't believe that the issue of Global Warming is worth our time. But you know what, we don't need him to believe in it so long as the greater population does and acts upon it to make a difference in saving this great planet we call home. ")
+             h5("That is why we also created this report, to educate the common folk of the occurances of what is going on in our world today. We are unfortunately lead by a president that doesn't believe that the issue of Global Warming is worth our time. But you know what, we don't need him to believe in it so long as the greater population does and acts upon it to make a difference in saving this great planet we call home. ")
             )
           ),
 
@@ -105,9 +107,7 @@ navbarPage(
              ),
              mainPanel(
                h3("What does the Map represent?"),
-               h5("When using the interactive map, you are able to see the 2016 electoral college
-                  results of each state to portray their political inclination at the time. You can also 
-                  see the state data about the variable you want to compare."),
+               h5("When using the interactive map, you are able to see the 2016 electoral college results of each state to portray their political inclination at the time. You can also see the state data about the variable you want to compare. The energy is measured in Thosands of Megawatts"),
                h5("You can adjust the information being displayed through the widgets to choose what
                   variable to compare between each state, whether that be a type of energy or population.
                   You can also choose the maximum value and whether to include zero values or exclude them
@@ -150,7 +150,7 @@ navbarPage(
              # Show a plot of the generated distribution
              mainPanel(
                h3("What does the Histogram display?"),
-               h5("In this histogram, we are able to see the different energies independently and how much each state consumed each of them in the year 2016. You just have to select the energy you wish to display from the Select dropbox and the histogram will be modified to show you the consumption of that energy in each state."),
+               h5("In this histogram, we are able to see the seperate types of energies and how much each state consumed of each in 2016. You can select the energy you wish to display from the dropbox and the histogram will show you the consumption of that energy in each state. The energy is measured in Thosands of Megawatts."),
                
                plotlyOutput("histPlot", width = "100%", height = "800px")
                )
@@ -190,9 +190,7 @@ navbarPage(
              # Show a plot of the generated distribution
              mainPanel(
                h3("What does this Bar Graph display?"),
-               h5("his bar graph shos the change in energy consumption from 2015 to 2016.
-                  The energy is measured by Thosands of Megawatts and depicts both the increase and decrease in energy usage by state. 
-                  You can select the range of wattage as well as the energy type to be displayed."),
+               h5("his bar graph shows the change in energy consumption from 2015 to 2016. The energy is measured in Thosands of Megawatts and depicts both the increase and decrease in energy usage by state. You can select the range of wattage as well as the energy type to be displayed."),
                plotlyOutput("changePlot")
                
              )
