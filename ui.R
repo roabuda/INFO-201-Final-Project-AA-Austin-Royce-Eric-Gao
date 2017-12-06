@@ -105,10 +105,6 @@ navbarPage(
                            choices = state.name)
              ),
              mainPanel(
-               
-               plotlyOutput("map"),
-               plotlyOutput("pie.1", width = "100%", height = "900px"),
-               plotlyOutput("pie.2", width = "100%", height = "900px"),
                h3("What does the Map represent?"),
                h5("When using the interactive map, you are able to see the 2016 electoral college
                   results of each state to portray their political inclination at the time. You can also 
@@ -119,8 +115,8 @@ navbarPage(
                   as NA values. If you want to compare states energy usages individually, you can 
                   select 2 states to see percantages of how much of each type of energy is used."),
                plotlyOutput("map"),
-               plotlyOutput("pie.1"),
-               plotlyOutput("pie.2")
+               plotlyOutput("pie.1",width = "100%", height = "900px"),
+               plotlyOutput("pie.2",width = "100%", height = "900px")
               
              
                )
@@ -152,11 +148,10 @@ navbarPage(
 
              # Show a plot of the generated distribution
              mainPanel(
-               plotlyOutput("histPlot", width = "100%", height = "800px"),
                h3("What does the Histogram display?"),
                h5("In this histogram, we are able to see the different energies independently and how much each state consumed each of them in the year 2016. You just have to select the energy you wish to display from the Select dropbox and the histogram will be modified to show you the consumption of that energy in each state."),
                
-               plotlyOutput("histPlot")
+               plotlyOutput("histPlot", width = "100%", height = "800px")
                )
            )
   ),

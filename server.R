@@ -31,18 +31,18 @@ shinyServer(function(input, output) {
     # Filter data
     chart.data <- data %>% 
       filter(data[,input$hist.var] > 0)
-
+    
     
     # Make chart
     HistogramLineGraph(data.frame = chart.data,
-                   y.var = input$hist.var,
-                   max.range = input$new.variable.max1,
-                   my.title = "Energy Consumption",
-                   bar.title  = input$hist.var)
+                       y.var = input$hist.var,
+                       max.range = input$new.variable.max1,
+                       my.title = "Energy Consumption",
+                       bar.title  = input$hist.var)
   })
   
   
-
+  
   output$max.slider <- renderUI({
     sliderInput("change.max", "Variable Max", min=0, max=max(data.both[,input$hist.var.c]), value=max(data.both[,input$hist.var.c]))
   })
@@ -50,15 +50,15 @@ shinyServer(function(input, output) {
   output$min.slider <- renderUI({
     sliderInput("change.min", "Variable Min", max=0, min=min(data.both[,input$hist.var.c]), value=min(data.both[,input$hist.var.c]))
   })
-
+  
   output$changePlot <- renderPlotly({
     # Filter data
     if(input$remove == T)
     {
-    chart.data <- data.both %>% 
-      filter(data.both[,input$hist.var.c] != 0,
-             input$change.max >= data.both[,input$hist.var.c],input$change.min <= data.both[,input$hist.var.c])
-
+      chart.data <- data.both %>% 
+        filter(data.both[,input$hist.var.c] != 0,
+               input$change.max >= data.both[,input$hist.var.c],input$change.min <= data.both[,input$hist.var.c])
+      
     }
     else
     {
@@ -73,7 +73,7 @@ shinyServer(function(input, output) {
       t = 50,
       pad = 4
     )
- 
+    
     
     p <- plot_ly(chart.data, x = ~reorder(State, chart.data[,input$hist.var.c]), y = chart.data[,input$hist.var.c], type = 'bar') %>% 
       layout(yaxis = list(title = 'Thousands of MegaWatts'), font = list(size = 8, color = 'white'), 
@@ -81,28 +81,28 @@ shinyServer(function(input, output) {
              title = "The change from 2015 to 2016")%>% 
       layout(paper_bgcolor="#272b30") %>% 
       layout(plot_bgcolor="#272b30") %>% 
-    layout(autosize = F, width = 500, height = 400, margin = m)
+      layout(autosize = F, width = 500, height = 400, margin = m)
   })
   
-######Scatter######
+  ######Scatter######
   output$scatterPlot <- renderPlotly({
     # Filter data
-   
+    
     chart.data <- data %>% 
       filter(input$pop >= Population) %>% 
       filter(input$watt >= total)
-
+    
     # Make chart
     if(input$conf == T)
     {
- conf = T
+      conf = T
     }
     else{
       conf = F
     }
     if(input$unsure == T)
     {
-    chart.data[chart.data == 0] <- NA
+      chart.data[chart.data == 0] <- NA
     }
     
     ScatterGraph(data.frame = chart.data,
@@ -122,7 +122,7 @@ shinyServer(function(input, output) {
   
   
   ######MAP######
-
+  
   output$pie.1 <- renderPlotly({
     
     PieChart(data.frame = data,
@@ -144,30 +144,30 @@ shinyServer(function(input, output) {
   output$slider <- renderUI({
     sliderInput("new.variable.max", "Variable Max", min=0, max=max(data[,input$compare]), value=max(data[,input$compare]))
   })
-
+  
   output$map <- renderPlotly({
-
+    
     if(input$political == 0){
       chart.data <- data %>%
         filter(data[,input$compare] <= input$new.variable.max)
     }
     else{
-    chart.data <- data %>%
-      filter(data[,input$compare] <= input$new.variable.max) %>% 
-      filter(input$political == Winning.Party)
+      chart.data <- data %>%
+        filter(data[,input$compare] <= input$new.variable.max) %>% 
+        filter(input$political == Winning.Party)
     }
     if(input$map.zero == F)
     {
       chart.data[chart.data == 0] <- NA
     }
     
-
+    
     #creates reactive slider that changes range depending on what variable was chosen to compare
     #can't call output values in server
-
     
-  CreateMap(chart.data, input$compare)
-
+    
+    CreateMap(chart.data, input$compare)
+    
   })
   
 })
