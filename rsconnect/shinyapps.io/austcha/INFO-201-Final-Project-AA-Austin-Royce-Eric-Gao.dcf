@@ -5,8 +5,8 @@ account: austcha
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 244418
-bundleId: 1117882
+bundleId: 1119876
 url: https://austcha.shinyapps.io/INFO-201-Final-Project-AA-Austin-Royce-Eric-Gao/
-when: 1512526485.04872
+when: 1512602315.70913
 asMultiple: FALSE
 asStatic: FALSE

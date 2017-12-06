@@ -20,7 +20,7 @@ HistogramLineGraph <- function(data.frame,
   
  #change the range of the data
   data1 <- data.frame %>% 
-    filter(data.frame[,y.var] < max.range & data.frame[,y.var] > 0)
+    filter(data.frame[,y.var] <= max.range & data.frame[,y.var] > 0)
   
  #Set the boundry and text color
    f1 <- list(
