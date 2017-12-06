@@ -154,7 +154,16 @@ navbarPage(
                                           "Wind" = "WND.c",
                                           "All" = "total.c"
                            )
-               )
+                
+                           
+               ),
+               selectInput("remove", "Remove Zero Change", 
+                          choices = list("Yes"= T,
+                                         "No" = F
+                          )
+               ),
+               uiOutput("max.slider"),
+               uiOutput("min.slider")
              ),
              
              # Show a plot of the generated distribution

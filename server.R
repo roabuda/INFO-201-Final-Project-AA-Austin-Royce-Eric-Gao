@@ -33,13 +33,35 @@ shinyServer(function(input, output) {
                    bar.title  = input$hist.var,
                    line.title  = input$hist.var)
   })
+  
+  
+  output$max.slider <- renderUI({
+    sliderInput("change.max", "Variable Max", min=0, max=max(data.both[,input$hist.var.c]), value=max(data.both[,input$hist.var.c]))
+  })
+  
+  output$min.slider <- renderUI({
+    sliderInput("change.min", "Variable Min", max=0, min=min(data.both[,input$hist.var.c]), value=min(data.both[,input$hist.var.c]))
+  })
+  
   output$changePlot <- renderPlotly({
     # Filter data
-    chart.data <- data.both 
+    if(input$remove == T)
+    {
+    chart.data <- data.both %>% 
+      filter(data.both[,input$hist.var.c] != 0)
+    }
+    else
+    {
+      chart.data <- data.both 
+    }
+    chart.data <- chart.data %>% 
+      filter(input$change.max >= chart.data[,input$hist.var.c])%>% 
+      filter(input$change.min <= chart.data[,input$hist.var.c])
+
  
     
     p <- plot_ly(chart.data, x = ~reorder(State, chart.data[,input$hist.var.c]), y = chart.data[,input$hist.var.c], type = 'bar', name = 'SF Zoo') %>% 
-      layout(yaxis = list(title = 'Count'), font = list(size = 8, color = 'white'), 
+      layout(yaxis = list(title = 'Thousands of MegaWatts'), font = list(size = 8, color = 'white'), 
              xaxis = list(title = "", tickangle = -35))%>% 
       layout(paper_bgcolor="#272b30") %>% 
       layout(plot_bgcolor="#272b30") 
