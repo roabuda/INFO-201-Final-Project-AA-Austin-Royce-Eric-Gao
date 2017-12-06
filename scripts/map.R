@@ -41,8 +41,8 @@ CreateMap <- function(data.frame,compare)
       title = paste(compare,"Amount per State"),
       geo = g, font = t
     ) %>% 
-    layout(paper_bgcolor="#272b30") %>% 
-    layout(plot_bgcolor="#272b30") 
+    layout(plot_bgcolor="#272b30") %>% 
+    layout(paper_bgcolor="#272b30") 
   
   return(p)
 }

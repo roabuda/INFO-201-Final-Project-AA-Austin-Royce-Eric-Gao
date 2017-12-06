@@ -30,19 +30,19 @@ HistogramLineGraph <- function(data.frame,
   )
   f2 <- list(
     family = "Old Standard TT, serif",
-    size = 6,
+    size = 10,
     color = "white"
   )
 
   t <- list(
     color = 'white') 
-  
+
   #make the histogram
   p1 <- plot_ly(data = data1, x = ~data1[,y.var], y = ~reorder(State, data1[,y.var]), name = bar.title,
-                type = 'bar', orientation = 'h',text = ~data1[,y.var], textposition = 'auto',
+                type = 'bar', orientation = 'h',text = ~data1[,y.var], textposition = "auto",textfont = list(color = 'white', size = 30),
                 marker = list(color = 'rgba(50, 171, 96, 0.6)',
                               line = list(color = 'rgba(50, 171, 96, 1.0)', width = 1))) %>%
-    layout(yaxis = list(showgrid = FALSE, showline = FALSE, showticklabels = TRUE, domain= c(0, 0.85),title = "STATE",
+    layout(yaxis = list(showgrid = FALSE, showline = FALSE, showticklabels = TRUE, domain= c(0, 0.85),title = "",
                         titlefont = f1,
                         showticklabels = TRUE,
                         tickfont = f2,
@@ -50,7 +50,8 @@ HistogramLineGraph <- function(data.frame,
            xaxis = list(zeroline = FALSE, showline = FALSE, showticklabels = TRUE, showgrid = TRUE, title = y.var),font = t) %>% 
     layout(paper_bgcolor="#272b30") %>% 
     layout(plot_bgcolor="#272b30") %>% 
-    layout(title = my.title)
+    # add_text(textposition = 'auto', textfont = t2,text = ~data1[,y.var]) %>% 
+    layout(title = my.title, showlegend = F) 
   
   return(p1)
 
@@ -166,31 +167,66 @@ m <- list(
 #   #                 showarrow = FALSE)
 # p
 # 
-f1 <- list(
-  family = "Arial, sans-serif",
-  size = 15,
-  color = "white"
-)
-f2 <- list(
-  family = "Old Standard TT, serif",
-  size = 5,
-  color = "white"
-)
+# f1 <- list(
+#   family = "Arial, sans-serif",
+#   size = 15,
+#   color = "white"
+# )
+# f2 <- list(
+#   family = "Old Standard TT, serif",
+#   size = 5,
+#   color = "white"
+# )
+# 
+# t <- list(
+#   color = 'white') 
+# 
+# p1 <- plot_ly(data = joined, x = ~joined[,"COW"], y = ~reorder(State, joined[,"COW"]), name = "bar_title",
+#               type = 'bar', orientation = 'h',text = ~joined[,"COW"], textposition = 'auto',
+#               marker = list(color = 'rgba(50, 171, 96, 0.6)',
+#                             line = list(color = 'rgba(50, 171, 96, 1.0)', width = 1))) %>%
+#   layout(yaxis = list(showgrid = FALSE, showline = FALSE, showticklabels = TRUE, domain= c(0, 0.85),title = "STATE",
+#                       titlefont = f1,
+#                       showticklabels = TRUE,
+#                       tickfont = f2,
+#                       exponentformat = "E"),
+#          xaxis = list(zeroline = FALSE, showline = FALSE, showticklabels = TRUE, showgrid = TRUE),font = t) %>% 
+#   layout(paper_bgcolor="#272b30") %>% 
+#   layout(plot_bgcolor="#272b30") %>% 
+#   layout(title = "Survey") 
+# p1
+#   p2 <- plot_ly(data = joined, x = ~joined[,"COW"], y = ~reorder(State, joined[,"COW"]), name = "bar_title",
+#                 type = 'bar',text = ~joined[,"COW"], textposition = 'auto',
+#                 marker = list(color = 'rgba(50, 171, 96, 0.6)',
+#                               line = list(color = 'rgba(50, 171, 96, 1.0)', width = 1))) %>%  
+#     # add_trace(x = fit$x, y = ~reorder(State, joined[,"COW"]), type = "scatter", mode = "lines", fill = "tozeroy", yaxis = "y2", name = "Density") %>%
+#     layout(yaxis = list(showgrid = FALSE, showline = FALSE, showticklabels = TRUE, domain= c(0, 0.85),title = "STATE",
+#                         titlefont = f1,
+#                         showticklabels = TRUE,
+#                         tickfont = f2,
+#                         exponentformat = "E"),
+#            xaxis = list(zeroline = FALSE, showline = FALSE, showticklabels = TRUE, showgrid = TRUE),font = t) %>% 
+#     layout(paper_bgcolor="#272b30") %>% 
+#     layout(plot_bgcolor="#272b30") %>%  
+#     # layout(yaxis2 = list(overlaying = "y", side = "right"))
+#     qplot(y = joined$COW, geom = 'blank') +   
+#     geom_line(aes(y = ..density.., colour = 'Empirical'), stat = 'density')  
+#     
+# p2
+# 
+# 
+#   x <- joined$COW
+# fit <- density(x)
 
-t <- list(
-  color = 'white') 
 
-p1 <- plot_ly(data = joined, x = ~joined[,"COW"], y = ~reorder(State, joined[,"COW"]), name = "bar_title",
-              type = 'bar', orientation = 'h',text = ~joined[,"COW"], textposition = 'auto',
-              marker = list(color = 'rgba(50, 171, 96, 0.6)',
-                            line = list(color = 'rgba(50, 171, 96, 1.0)', width = 1))) %>%
-  layout(yaxis = list(showgrid = FALSE, showline = FALSE, showticklabels = TRUE, domain= c(0, 0.85),title = "STATE",
-                      titlefont = f1,
-                      showticklabels = TRUE,
-                      tickfont = f2,
-                      exponentformat = "E"),
-         xaxis = list(zeroline = FALSE, showline = FALSE, showticklabels = TRUE, showgrid = TRUE),font = t) %>% 
-  layout(paper_bgcolor="#272b30") %>% 
-  layout(plot_bgcolor="#272b30") %>% 
-  layout(title = "Survey")
-p1
+# x = rnorm(1000);
+# 
+# # overlay histogram, empirical density and normal density
+# p0 = qplot(x, geom = 'blank') +   
+#   geom_line(aes(y = ..density.., colour = 'Empirical'), stat = 'density') +  
+#   # stat_function(fun = dnorm, aes(colour = 'Normal')) +                       
+#   geom_histogram(aes(y = ..density..), alpha = 0.4) +                        
+#   scale_colour_manual(name = 'Density', values = c('red', 'blue')) + 
+#   theme(legend.position = c(0.85, 0.85))
+# p0
+
