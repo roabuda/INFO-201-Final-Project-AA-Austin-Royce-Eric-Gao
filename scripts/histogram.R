@@ -33,6 +33,13 @@ HistogramLineGraph <- function(data.frame,
     size = 6,
     color = "white"
   )
+  m <- list(
+    l = 50,
+    r = 50,
+    b = 50,
+    t = 50,
+    pad = 4
+  )
 
   t <- list(
     color = 'white') 
@@ -50,7 +57,8 @@ HistogramLineGraph <- function(data.frame,
            xaxis = list(zeroline = FALSE, showline = FALSE, showticklabels = TRUE, showgrid = TRUE, title = y.var),font = t) %>% 
     layout(paper_bgcolor="#272b30") %>% 
     layout(plot_bgcolor="#272b30") %>% 
-    layout(title = my.title)
+    layout(title = my.title)%>% 
+    layout(autosize = F, width = 500, height = 500, margin = m)
   
   return(p1)
 

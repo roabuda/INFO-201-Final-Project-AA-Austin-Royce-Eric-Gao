@@ -90,9 +90,6 @@ navbarPage(
                            choices = state.name)
              ),
              mainPanel(
-               plotlyOutput("map"),
-               plotlyOutput("pie.1"),
-               plotlyOutput("pie.2"),
                h3("What does the Map represent?"),
                h5("When using the interactive map, you are able to see the 2016 electoral college
                   results of each state to portray their political inclination at the time. You can also 
@@ -101,7 +98,11 @@ navbarPage(
                   variable to compare between each state, whether that be a type of energy or population.
                   You can also choose the maximum value and whether to include zero values or exclude them
                   as NA values. If you want to compare states energy usages individually, you can 
-                  select 2 states to see percantages of how much of each type of energy is used.")
+                  select 2 states to see percantages of how much of each type of energy is used."),
+               plotlyOutput("map"),
+               plotlyOutput("pie.1"),
+               plotlyOutput("pie.2")
+              
              
                )
            )
@@ -111,8 +112,10 @@ navbarPage(
   tabPanel("Histogram",
            sidebarLayout(
              sidebarPanel(
-               selectInput("hist.var", "What do you want to histogram?", 
-                           choices = list("Coal" = "COW",
+               selectInput("hist.var", "Energy Type", 
+                           choices = list(
+                                          "All" = "total",
+                             "Coal" = "COW",
                                           "Biomass" = "BIO",
                                           "Geothermal" = "GEO",
                                           "Hydroelectric" = "HYC",
@@ -122,8 +125,7 @@ navbarPage(
                                           "Petrolium Coke" = "PC.",
                                           "Petrolium Liquids" = "PEL",
                                           "Solar" = "TSN",
-                                          "Wind" = "WND",
-                                          "All" = "total"
+                                          "Wind" = "WND"
                            )
                ),
                uiOutput("slider2")
@@ -131,18 +133,21 @@ navbarPage(
 
              # Show a plot of the generated distribution
              mainPanel(
-               plotlyOutput("histPlot"),
                h3("What does the Histogram display?"),
-               h5("In this histogram, we are able to see the different energies independently and how much each state consumed each of them in the year 2016. You just have to select the energy you wish to display from the Select dropbox and the histogram will be modified to show you the consumption of that energy in each state.")
-             )
+               h5("In this histogram, we are able to see the different energies independently and how much each state consumed each of them in the year 2016. You just have to select the energy you wish to display from the Select dropbox and the histogram will be modified to show you the consumption of that energy in each state."),
+               
+               plotlyOutput("histPlot")
+               )
            )
   ),
   
   tabPanel("Change in energy usage",
            sidebarLayout(
              sidebarPanel(
-               selectInput("hist.var.c", "What do you want to histogram?", 
-                           choices = list("Coal" = "COW.c",
+               selectInput("hist.var.c", "Energy Type", 
+                           choices = list(
+                                          "All" = "total.c",
+                                          "Coal" = "COW.c",
                                           "Biomass" = "BIO.c",
                                           "Geothermal" = "GEO.c",
                                           "Hydroelectric" = "HYC.c",
@@ -152,8 +157,7 @@ navbarPage(
                                           "Petrolium Coke" = "PC..c",
                                           "Petrolium Liquids" = "PEL.c",
                                           "Solar" = "TSN.c",
-                                          "Wind" = "WND.c",
-                                          "All" = "total.c"
+                                          "Wind" = "WND.c"
                            )
                 
                            
@@ -169,9 +173,12 @@ navbarPage(
              
              # Show a plot of the generated distribution
              mainPanel(
-               plotlyOutput("changePlot"),
-               h3("What does the Histogram display?"),
-               h5("In this histogram, we are able to see the different energies independently and how much each state consumed each of them in the year 2016. You just have to select the energy you wish to display from the Select dropbox and the histogram will be modified to show you the consumption of that energy in each state.")
+               h3("What does this Bar Graph display?"),
+               h5("his bar graph shos the change in energy consumption from 2015 to 2016.
+                  The energy is measured by Thosands of Megawatts and depicts both the increase and decrease in energy usage by state. 
+                  You can select the range of wattage as well as the energy type to be displayed."),
+               plotlyOutput("changePlot")
+               
              )
            )
   ),
@@ -234,10 +241,11 @@ navbarPage(
            
              # Show a plot of the generated distribution
              mainPanel(
-               plotlyOutput("scatterPlot"),
                h3("What does the Scatter Plot show?"),
                h5("The interactive Scatter Plot above shows the Energy Consumption in wattage and how it corrolates to the population. When you hover over the dots you will come to realize that they are the representation of the states."),
-               h5("You can change the Scatter Plot to display different data by adjusting the Range widgets or the Select dropboxes. ")
+               h5("You can change the Scatter Plot to display different data by adjusting the Range widgets or the Select dropboxes. "),
+               plotlyOutput("scatterPlot")
+               
              )
            )
   ),

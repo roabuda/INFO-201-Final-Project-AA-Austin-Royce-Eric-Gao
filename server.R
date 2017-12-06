@@ -56,23 +56,32 @@ shinyServer(function(input, output) {
     if(input$remove == T)
     {
     chart.data <- data.both %>% 
-      filter(data.both[,input$hist.var.c] != 0)
+      filter(data.both[,input$hist.var.c] != 0,
+             input$change.max >= data.both[,input$hist.var.c],input$change.min <= data.both[,input$hist.var.c])
+
     }
     else
     {
-      chart.data <- data.both 
+      chart.data <- data.both %>% 
+        filter(input$change.max >= data.both[,input$hist.var.c])%>% 
+        filter(input$change.min <= data.both[,input$hist.var.c])
     }
-    chart.data <- chart.data %>% 
-      filter(input$change.max >= chart.data[,input$hist.var.c])%>% 
-      filter(input$change.min <= chart.data[,input$hist.var.c])
-
+    m <- list(
+      l = 50,
+      r = 50,
+      b = 50,
+      t = 50,
+      pad = 4
+    )
  
     
-    p <- plot_ly(chart.data, x = ~reorder(State, chart.data[,input$hist.var.c]), y = chart.data[,input$hist.var.c], type = 'bar', name = 'SF Zoo') %>% 
+    p <- plot_ly(chart.data, x = ~reorder(State, chart.data[,input$hist.var.c]), y = chart.data[,input$hist.var.c], type = 'bar') %>% 
       layout(yaxis = list(title = 'Thousands of MegaWatts'), font = list(size = 8, color = 'white'), 
-             xaxis = list(title = "", tickangle = -35))%>% 
+             xaxis = list(title = "", tickangle = -35),
+             title = "The change from 2015 to 2016")%>% 
       layout(paper_bgcolor="#272b30") %>% 
-      layout(plot_bgcolor="#272b30") 
+      layout(plot_bgcolor="#272b30") %>% 
+    layout(autosize = F, width = 500, height = 400, margin = m)
   })
   
 ######Scatter######
