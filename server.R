@@ -133,7 +133,7 @@ shinyServer(function(input, output) {
     ggplot() + 
       
       # Make the bubbles
-      geom_polygon(data = dat.gg, aes(x, y, group = id, fill=as.factor(id)), colour = "black", alpha = 0.6, text = data.1$State ) +
+      geom_polygon(data = dat.gg, aes(x, y, group = id, fill=as.factor(id)), color = "black", alpha = 1, text = data.1$State ) +
       
       # Add text in the center of each bubble + control its size
       geom_text(data = data.1, aes(x, y, size=Thousands.of.Megawatts, label = State)) +
