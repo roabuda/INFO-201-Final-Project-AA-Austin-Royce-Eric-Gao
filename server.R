@@ -189,8 +189,7 @@ shinyServer(function(input, output) {
              xaxis = list(title = "", tickangle = -35),
              title = "The change from 2015 to 2016")%>% 
       layout(paper_bgcolor="#272b30") %>% 
-      layout(plot_bgcolor="#272b30") %>% 
-      layout(autosize = F, width = 500, height = 400, margin = m)
+      layout(plot_bgcolor="#272b30")
   })
   
   ######Scatter######

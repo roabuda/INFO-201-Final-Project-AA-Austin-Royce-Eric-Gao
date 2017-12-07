@@ -197,7 +197,7 @@ navbarPage(
              mainPanel(
                h3("What does this Bar Graph display?"),
                h5("This bar graph shows the change in energy consumption from 2015 to 2016. The energy is measured in Thosands of Megawatts and depicts both the increase and decrease in energy usage by state. You can select the range of wattage as well as the energy type to be displayed."),
-               plotlyOutput("changePlot")
+               plotlyOutput("changePlot", width = "106%", height = 500)
                
              )
            )
