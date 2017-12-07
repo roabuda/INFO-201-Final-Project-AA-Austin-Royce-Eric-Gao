@@ -183,7 +183,8 @@ shinyServer(function(input, output) {
     )
     
     
-    p <- plot_ly(chart.data, x = ~reorder(State, chart.data[,input$hist.var.c]), y = chart.data[,input$hist.var.c], type = 'bar') %>% 
+    p <- plot_ly(chart.data, x = ~reorder(State, chart.data[,input$hist.var.c]), y = chart.data[,input$hist.var.c], type = 'bar',
+                 color = chart.data$Winning.Party.x, colors = c('blue','red')) %>% 
       layout(yaxis = list(title = 'Thousands of MegaWatts'), font = list(size = 8, color = 'white'), 
              xaxis = list(title = "", tickangle = -35),
              title = "The change from 2015 to 2016")%>% 
