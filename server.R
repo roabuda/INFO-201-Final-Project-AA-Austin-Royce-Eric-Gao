@@ -39,7 +39,7 @@ shinyServer(function(input, output) {
                        y.var = input$hist.var,
                        max.range = input$new.variable.max1,
                        my.title = "Energy Consumption",
-                       bar.title  = input$hist.var)
+                       bar.title  = "")
   })
   
   

@@ -47,8 +47,7 @@ HistogramLineGraph <- function(data.frame,
   #make the histogram
   p1 <- plot_ly(data = data1, x = ~data1[,y.var], y = ~reorder(State, data1[,y.var]), name = bar.title,
                 type = 'bar', orientation = 'h',text = ~data1[,y.var], textposition = "auto",textfont = list(color = 'white', size = 30),
-                marker = list(color = 'rgba(50, 171, 96, 0.6)',
-                              line = list(color = 'rgba(50, 171, 96, 1.0)', width = 1))) %>%
+              color = data1[,'Winning.Party'], colors = c("blue3", 'red3')) %>%
     layout(yaxis = list(showgrid = FALSE, showline = FALSE, showticklabels = TRUE, domain= c(0, 0.85),title = "",
                         titlefont = f1,
                         showticklabels = TRUE,
@@ -96,7 +95,7 @@ m <- list(
 # p <- plot_ly(joined, y = ~factor(State, levels = State[order(joined[,'COW'], decreasing = F)]), x = ~COW, type = 'bar',
 #              text = ~BIO, textposition = 'auto',orientation = 'h',
 #              marker = list(color = 'rgb(158,202,225)',
-#                            line = list(color = 'rgb(8,48,107)', width = 1.5))) %>%
+#                            line = list(color = 'rgb(8,48,107)', width = 1.5)), color = joined$Winning.Party) %>%
 #   layout(title = "MY ASS",
 #          xaxis = list(title = ""),
 #          yaxis = list(title = "COW"))
@@ -236,4 +235,5 @@ m <- list(
 #   scale_colour_manual(name = 'Density', values = c('red', 'blue')) + 
 #   theme(legend.position = c(0.85, 0.85))
 # p0
+
 
