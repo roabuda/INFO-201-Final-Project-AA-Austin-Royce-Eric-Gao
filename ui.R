@@ -60,11 +60,15 @@ navbarPage(
              h3("Global Warming...Climate Change...it's real"),
              tags$hr(),
              tags$img(src = "https://www.carbonbrief.org/wp-content/uploads/2016/05/Stock-Fort-McMurray.jpg", width = "100%",height = "300px"),
-             h5("In our world today, we are faced with an issue. An issue that will define the course of history in the years to come. An issue that will affect not just us humans but also every being on this Earth. This issue is commonly known as Global Warming."),
-             h5("It is as it sounds-- the warming of our world. This is detrimental to us in the sense that with our climate rising in temperature, our polar ice caps are melting and therefore, the ocean levels are rising as well. This affects the coasts of all the continents and could leave millions, if not billions homeless if the ocean levels flooded major cities."),
-             h5("The reason the Earth is heating up is because of carbon emissions and other natural gases that get released into our atmosphere every single day. Since the Industrial Revolution, factories, power plants and later cars have released these gases that trap the Sun's energy in our atmosphere and prevent it from escaping into space as it should. This in return heats up the Earth. This is known as the Green House Effect."),
-             h5("And it's not just us humans. Animals could go extinct if their habitats are affected by the global climate change. Polar Bears are Endangered Species to this date with the melting of the Northern ice cap. Animals are having to migrate to different areas of the world to try and save their existence. But sometimes the transition to a new territory isn't so smooth. They might not get used to the new environment or they might act as an invasive species that could dismantal the food chain in that territory. In the end, all of this are the reprecussions of global warming. We are altering the balance of nature and in return we will end up not only causing the extinction of animals, but also our own."),
-             h5("That is why we also created this report, to educate the common folk of the occurances of what is going on in our world today. We are unfortunately lead by a president that doesn't believe that the issue of Global Warming is worth our time. But you know what, we don't need him to believe in it so long as the greater population does and acts upon it to make a difference in saving this great planet we call home. ")
+              tags$div("In our world today, we are faced with the issue commonly known as Global Warming."),
+                tags$br(),
+                  tags$div("It is as it sounds-- the warming of our world. This is detrimental to us in the sense that with our climate rising in temperature, our polar ice caps are melting and therefore, the ocean levels are rising as well. This affects the coasts of all the continents and could leave millions, if not billions homeless if the ocean levels flooded major cities."),
+                    tags$br(),
+                      tags$div("The reason the Earth is heating up is because of carbon emissions and other natural gases that get released into our atmosphere every single day. Since the Industrial Revolution, factories, power plants and then later cars have released these gases that trap the Sun's energy in our atmosphere and prevent it from escaping into space as it should. This in return heats up the Earth. This is known as the Green House Effect."),
+                        tags$br(),
+                          tags$div("And it's not just us humans being affected. Animals could go extinct if their habitats are affected by the global climate change. Polar Bears are Endangered Species to this date with the melting of the northern ice cap. Animals are having to migrate to different areas of the world to try and save their existence. But sometimes the transition to a new territory isn't so smooth. They might not get used to the new environment or they might act as an invasive species that could dismantle the food chain in that territory. In the end, all of this are the repercussions of global warming. We are altering the balance of nature and in return we will end up not only causing the extinction of animals, but also our own."),
+                            tags$br(),
+                              tags$div("This report was created with the intention of presenting the various uses of energy here in the United States, and to show how we still heavily use energies that are damaging to our world today.")
             )
           ),
 
@@ -111,9 +115,11 @@ navbarPage(
                h5("You can adjust the information being displayed through the widgets to choose what
                   variable to compare between each state, whether that be a type of energy or population.
                   You can also choose the maximum value and whether to include zero values or exclude them
-                  as NA values. If you want to compare states energy usages individually, you can 
-                  select 2 states to see percantages of how much of each type of energy is used."),
+                  as NA values."),
                plotlyOutput("map"),
+               h3("What do the Pie Charts represent?"),
+               h5("If you want to compare states energy usages individually, you can 
+                  select 2 states to see percantages of how much of each type of energy is used."),
                splitLayout(cellWidths = c('50%','50%'),
                            plotlyOutput("pie.1", height = 500),
                plotlyOutput("pie.2", height = 500)),
@@ -190,7 +196,7 @@ navbarPage(
              # Show a plot of the generated distribution
              mainPanel(
                h3("What does this Bar Graph display?"),
-               h5("his bar graph shows the change in energy consumption from 2015 to 2016. The energy is measured in Thosands of Megawatts and depicts both the increase and decrease in energy usage by state. You can select the range of wattage as well as the energy type to be displayed."),
+               h5("This bar graph shows the change in energy consumption from 2015 to 2016. The energy is measured in Thosands of Megawatts and depicts both the increase and decrease in energy usage by state. You can select the range of wattage as well as the energy type to be displayed."),
                plotlyOutput("changePlot")
                
              )
@@ -263,7 +269,14 @@ navbarPage(
              )
            )
   ),
-  
+  tabPanel("Analysis",
+           h4("	From our data displayed in this report, we observed various correlations between the energy, population, and political inclination of each state. For instance, we noticed in our Scatter Plot that when the population is high, the more efficient the energy usage per person is. Also, another note worthy comment that should be addressed is that the Republican states use more energy than the Democratic states."), 
+	          tags$br(),   
+              h4("From our Change in Energy Usage bar graph, we see that fossil fuels are decreasing. That was noticed from the 2015 to 2016 data sets. And surprisingly, although there was a drop in use per state, the US still primarily uses coal as its main energy source."),
+                tags$br(),
+                  h4("From our bubble chart and histogram, we see that Texas is the state that uses the most energy overall. Texas happens to be Republican and its main energy us is Natural Gases.")
+                    
+  ),
   tabPanel("Sources",
   
   mainPanel(
