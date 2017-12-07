@@ -270,11 +270,19 @@ navbarPage(
            )
   ),
   tabPanel("Analysis",
-           h4("	From our data displayed in this report, we observed various correlations between the energy, population, and political inclination of each state. For instance, we noticed in our Scatter Plot that when the population is high, the energy usage per person is generally lower, resulting in the state to be more efficient. Also, another note worthy comment that should be addressed is that the Republican states tend to use more energy than the Democratic states."), 
-	          tags$br(),   
-              h4("From our Change in Energy Usage bar graph, we see that fossil fuels usage are decreasing in many states between 2015 and 2016. Despite the drop in use per state, the US still primarily uses coal as its main energy source."),
-                tags$br(),
-                  h4("From our bubble chart and histogram, we see that Texas is the state that uses the most energy overall. Texas happens to be Republican and its main energy us is Natural Gases.")
+          h3("Analysis"), 
+           h5("From our data displayed in this report, we observed various correlations between the energy, population, political inclination of each state. We also were able to answer the questions we presented in the introduction:"), 
+	          tags$br(), 
+              h3("Do more populated states use more clean energy than those that aren’t a populated?"),
+                h5("In regards to whether the more populated states use more clean energy than those that aren’t as populated, we see that the more populated states tend to use energy types that aren’t clean. For instance, the top three most populated states, Texas, California and New York abundantly use natural gases as their main energy type (about 50% for each of the states) which is considered a fossil fuel. Fossil fuels are what factor into the Green House effect that causes Global Warming."),
+                  tags$br(),
+                    h3("Does the energy consumption by each state correlate to its political inclination?"),
+                       h5("We do see somewhat of a correlation here, mostly visible in our bubble chart. We see with states like Texas, Alabama, Florida, North Carolina and Pennsylvania that the Republican states are the ones that use up the most energy in the U.S. There are a few Democratic states that are in the mix up of the being a top user of energy, but the Republican side has them beat."),
+                        tags$br(),
+                          h3("Does energy usage and population have a linear relationship?"),
+                            h5("Well, if you reference our scatter plot, you will notice that population and energy usage plot the state dot close to the linear regression line. They do appear to be linear, with only a couple outliers like Texas and Alabama. This is applicable for both the Republican and Democratic sides."),
+                              tags$br(),
+                                h5("Other things we noticed were that in our Scatter Plot when the population is high, the more efficient the energy usage per person is. Also from our Change in Energy Usage bar graph, we see that fossil fuels are decreasing. That was noticed from the 2015 to 2016 data sets. And surprisingly, although there was a drop in use per state, the US still primarily uses coal as its main energy source. From our bubble chart and histogram, we see that Texas is the state that uses the most energy overall.")
                     
   ),
   tabPanel("Sources",
